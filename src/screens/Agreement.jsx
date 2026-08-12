@@ -3,6 +3,7 @@ import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 import { formatINR } from '../engine/creditEngine';
 import { getDynamicProfile } from '../engine/mockProfiles';
+import robertSelfie from '../assets/robert-selfie.png';
 
 export default function Agreement() {
   const { state, dispatch, nextStep } = useLoan();
@@ -224,8 +225,12 @@ export default function Agreement() {
 
               {selfieState === 'captured' && (
                 <div className="w-full">
-                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative" style={{ height: '200px', border: '2px solid var(--success)' }}>
-                    {/* Placeholder for captured image */}
+                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ height: '200px', border: '2px solid var(--success)' }}>
+                    {profile?.aadhaar?.name === 'Robert' ? (
+                      <img src={robertSelfie} alt="Selfie" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-muted text-sm">Preview</span>
+                    )}
                   </div>
                   <div className="flex gap-2">
                     <button className="btn btn-secondary flex-1" onClick={() => setSelfieState('camera')}>Retake</button>
