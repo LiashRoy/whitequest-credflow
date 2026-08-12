@@ -230,8 +230,8 @@ export default function Agreement() {
             {paymentStep === 'processing' ? (
               <div className="loading-center py-8">
                 <div style={{ position: 'relative', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                  <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', background: 'var(--accent)', opacity: 0.2, animation: 'pulse 1.5s infinite ease-in-out' }}></div>
-                  <div className="loading-spinner" style={{ width: '40px', height: '40px', borderWidth: '3px', borderTopColor: 'var(--accent-light)', borderColor: 'rgba(255,255,255,0.1)' }}></div>
+                  <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', background: '#3B82F6', opacity: 0.2, animation: 'pulse 1.5s infinite ease-in-out' }}></div>
+                  <div className="loading-spinner" style={{ width: '40px', height: '40px', borderWidth: '3px', borderTopColor: '#60A5FA', borderRightColor: 'rgba(59,130,246,0.2)', borderBottomColor: 'rgba(59,130,246,0.2)', borderLeftColor: 'rgba(59,130,246,0.2)' }}></div>
                 </div>
                 <h3 className="heading-sm mt-4 text-white" style={{ animation: 'pulse 1.5s infinite ease-in-out' }}>Verifying Payment securely...</h3>
                 <p className="text-xs text-muted mt-2">Please do not close this window</p>
