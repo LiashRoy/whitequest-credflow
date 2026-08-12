@@ -117,11 +117,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="home-footer">
-          <p>PGDM Fintech Course Project · Simulation Only · No Real Financial Transactions</p>
-        </div>
       </div>
 
       {showDemoModal && (
