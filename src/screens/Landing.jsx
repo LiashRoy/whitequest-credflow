@@ -48,16 +48,16 @@ export default function Landing() {
         <input 
           type="range" 
           min="10000" 
-          max="500000" 
+          max="2000000" 
           step="5000" 
           value={amount} 
           onChange={(e) => setAmount(Number(e.target.value))}
           className="range-slider w-full"
-          style={{ '--fill': `${((amount - 10000) / 490000) * 100}%` }}
+          style={{ '--fill': `${((amount - 10000) / 1990000) * 100}%` }}
         />
         <div className="range-labels flex-between text-xs text-muted mt-2">
           <span>₹10K</span>
-          <span>₹5L</span>
+          <span>₹20L</span>
         </div>
       </div>
       

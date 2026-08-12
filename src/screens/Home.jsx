@@ -89,7 +89,7 @@ export default function Home() {
             </div>
             <h2 className="home-card-title">Apply for a Loan</h2>
             <p className="home-card-desc">
-              Get up to ₹5,00,000 with instant digital KYC, real-time credit assessment, and same-day UPI disbursement.
+              Get up to ₹20,00,000 with instant digital KYC, real-time credit assessment, and same-day UPI disbursement.
             </p>
             <div className="home-card-cta">
               Start Application
