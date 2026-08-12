@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 import { formatINR } from '../engine/creditEngine';
@@ -22,6 +22,33 @@ export default function Agreement() {
   const [otp, setOtp] = useState('');
 
   const { creditResult, bankStatementData } = state;
+
+  useEffect(() => {
+    if (paymentStep === 'debit_banks') {
+      const targetName = profile?.aadhaar?.name || 'Robert';
+      const targetNumber = '4532 8912 3456 7890';
+      const targetExpiry = '12/29';
+      const targetCvv = '456';
+      
+      let nameIdx = 0, numIdx = 0, expIdx = 0, cvvIdx = 0;
+      setCardDetails({ name: '', number: '', expiry: '', cvv: '' });
+
+      const interval = setInterval(() => {
+        let done = true;
+        setCardDetails(prev => {
+          const next = { ...prev };
+          if (nameIdx < targetName.length) { next.name = targetName.slice(0, nameIdx + 1); nameIdx++; done = false; }
+          if (numIdx < targetNumber.length) { next.number = targetNumber.slice(0, numIdx + 1); numIdx++; done = false; }
+          if (expIdx < targetExpiry.length) { next.expiry = targetExpiry.slice(0, expIdx + 1); expIdx++; done = false; }
+          if (cvvIdx < targetCvv.length) { next.cvv = targetCvv.slice(0, cvvIdx + 1); cvvIdx++; done = false; }
+          return next;
+        });
+        if (done) clearInterval(interval);
+      }, 50);
+
+      return () => clearInterval(interval);
+    }
+  }, [paymentStep, profile?.aadhaar?.name]);
 
   const bankAccount = bankStatementData?.accountNumber || profile?.bankStatement?.accountNumber || 'XXXX1234';
   const last4 = bankAccount.slice(-4);
