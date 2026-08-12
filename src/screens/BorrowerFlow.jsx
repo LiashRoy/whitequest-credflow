@@ -71,7 +71,7 @@ export default function BorrowerFlow() {
       <div className="borrower-side-panel">
         <div className="side-panel-inner">
           <h1 className="side-panel-logo font-logo">White<span>Quest</span></h1>
-          <p className="side-panel-tagline">Personal loans, reimagined.</p>
+          <p className="side-panel-tagline">Educational loans, reimagined.</p>
 
           <div className="side-panel-features">
             <div className="side-panel-feature">

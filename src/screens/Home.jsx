@@ -47,7 +47,7 @@ export default function Home() {
             </svg>
           </div>
           <h1 className="home-title font-logo">White<span>Quest</span></h1>
-          <p className="home-tagline">Personal loans, reimagined.</p>
+          <p className="home-tagline">Educational loans, reimagined.</p>
         </div>
 
         {/* Trust badges */}
