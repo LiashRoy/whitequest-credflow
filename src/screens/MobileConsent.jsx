@@ -29,8 +29,10 @@ export default function MobileConsent() {
         <h2 className="heading-lg">Verify your identity</h2>
         <p className="text-body text-muted mt-2 mb-6">Enter your mobile number to get started.</p>
         
-        <div className="form-group mb-6">
-          <label className="form-label">+91</label>
+        <div className="form-group mb-6" style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', fontWeight: '600', pointerEvents: 'none' }}>
+            +91
+          </div>
           <input 
             type="text" 
             maxLength={10} 
@@ -38,6 +40,7 @@ export default function MobileConsent() {
             onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
             className="form-input" 
             placeholder="Mobile Number"
+            style={{ paddingLeft: '52px' }}
           />
         </div>
         
