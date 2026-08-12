@@ -21,6 +21,9 @@ export default function Agreement() {
   const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvv: '', name: '' });
   const [otp, setOtp] = useState('');
 
+  // Selfie State
+  const [selfieState, setSelfieState] = useState('pending'); // 'pending', 'requesting_permission', 'camera', 'capturing', 'captured', 'submitted'
+
   const { creditResult, bankStatementData } = state;
 
   useEffect(() => {
@@ -175,8 +178,78 @@ export default function Agreement() {
         </div>
 
         <div className="card mb-2" style={{ opacity: mandateChecked ? 1 : 0.5, pointerEvents: mandateChecked ? 'auto' : 'none' }}>
+          <h3 className="heading-sm mb-2">Selfie Verification</h3>
+          {!mandateChecked && <p className="text-xs text-warning mb-2">Please complete the e-Mandate setup first.</p>}
+          
+          {mandateChecked && (
+            <div className="flex flex-col items-center gap-3 py-2">
+              {selfieState === 'pending' && (
+                <button className="btn btn-secondary w-full" onClick={() => {
+                  setSelfieState('requesting_permission');
+                  setTimeout(() => setSelfieState('camera'), 1500);
+                }}>
+                  Start Selfie Verification
+                </button>
+              )}
+
+              {selfieState === 'requesting_permission' && (
+                <div className="text-center py-4">
+                  <div className="loading-spinner mb-2" style={{ width: '24px', height: '24px', borderWidth: '2px', borderTopColor: 'var(--accent)', borderColor: 'rgba(255,255,255,0.1)', margin: '0 auto' }}></div>
+                  <p className="text-sm text-muted">Requesting Camera Permission...</p>
+                </div>
+              )}
+
+              {selfieState === 'camera' && (
+                <div className="w-full">
+                  <div className="bg-black rounded-lg mb-3 relative" style={{ height: '200px', border: '1px solid var(--border-light)' }}>
+                    {/* Placeholder for live camera feed */}
+                  </div>
+                  <button className="btn btn-primary w-full" onClick={() => {
+                    setSelfieState('capturing');
+                    setTimeout(() => setSelfieState('captured'), 1000);
+                  }}>
+                    Take Selfie
+                  </button>
+                </div>
+              )}
+
+              {selfieState === 'capturing' && (
+                <div className="w-full text-center">
+                  <div className="bg-black rounded-lg mb-3 flex items-center justify-center relative overflow-hidden" style={{ height: '200px', border: '1px solid var(--border-light)' }}>
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(255,255,255,0.8)', animation: 'flash 0.5s ease-out forwards' }}></div>
+                  </div>
+                  <p className="text-sm text-muted">Processing...</p>
+                </div>
+              )}
+
+              {selfieState === 'captured' && (
+                <div className="w-full">
+                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative" style={{ height: '200px', border: '2px solid var(--success)' }}>
+                    {/* Placeholder for captured image */}
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="btn btn-secondary flex-1" onClick={() => setSelfieState('camera')}>Retake</button>
+                    <button className="btn btn-primary flex-1" onClick={() => setSelfieState('submitted')}>Submit</button>
+                  </div>
+                </div>
+              )}
+
+              {selfieState === 'submitted' && (
+                <div className="flex gap-2 items-center p-3 w-full rounded bg-success bg-opacity-10 border border-success border-opacity-30">
+                  <div className="text-success text-xl">✓</div>
+                  <div>
+                    <div className="text-sm font-semibold text-success">Selfie Verified</div>
+                    <div className="text-xs text-muted">Identity successfully confirmed.</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="card mb-2" style={{ opacity: selfieState === 'submitted' ? 1 : 0.5, pointerEvents: selfieState === 'submitted' ? 'auto' : 'none' }}>
           <h3 className="heading-sm mb-2">Digital Signature</h3>
-          {!mandateChecked && <p className="text-xs text-warning mb-2">Please complete the e-Mandate setup to unlock digital signature.</p>}
+          {selfieState !== 'submitted' && <p className="text-xs text-warning mb-2">Please complete Selfie Verification to unlock digital signature.</p>}
           <div 
             className={`signature-area ${isSigned ? 'signed' : ''}`}
             onClick={() => !isSigned && setShowSignInput(true)}
@@ -216,7 +289,7 @@ export default function Agreement() {
       <div className="screen-footer">
         <button 
           className="btn btn-cta btn-block" 
-          disabled={!mandateChecked || !isSigned}
+          disabled={!mandateChecked || selfieState !== 'submitted' || !isSigned}
           onClick={handleSubmit}
         >
           I Agree & Sign
@@ -247,10 +320,10 @@ export default function Agreement() {
                 <p className="text-sm text-muted">Auto-debit setup is complete.</p>
               </div>
             ) : paymentStep === 'qr' ? (
-              <div className="text-center py-4">
+              <div className="text-center py-4 flex flex-col items-center">
                 <h3 className="heading-md mb-2">Scan to Pay ₹750</h3>
                 <p className="text-sm text-muted mb-4">Open your {selectedApp} app and scan this QR code to complete the mandate.</p>
-                <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-lg">
+                <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-lg" style={{ margin: '0 auto' }}>
                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=onyx@upi&pn=Onyx&am=750&cu=INR" alt="QR Code" className="w-40 h-40" />
                 </div>
                 <div className="text-xs text-muted">Awaiting scan confirmation...</div>
