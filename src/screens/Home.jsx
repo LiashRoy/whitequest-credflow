@@ -129,7 +129,7 @@ export default function Home() {
               <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('A')}>
                 <div className="flex flex-between w-full mb-1">
                   <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-success"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     Prime Customer
                   </span>
                   <span className="badge badge-success">CIBIL 782</span>
@@ -140,7 +140,7 @@ export default function Home() {
               <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('B')}>
                 <div className="flex flex-between w-full mb-1">
                   <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-warning"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
                     Near-Prime Customer
                   </span>
                   <span className="badge badge-warning">CIBIL 710</span>
@@ -151,7 +151,7 @@ export default function Home() {
               <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('C')}>
                 <div className="flex flex-between w-full mb-1">
                   <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-error"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     Sub-Prime Customer
                   </span>
                   <span className="badge badge-error">CIBIL 650</span>
