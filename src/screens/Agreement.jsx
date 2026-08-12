@@ -202,11 +202,11 @@ export default function Agreement() {
               )}
 
               {selfieState === 'camera' && (
-                <div className="w-full">
-                  <div className="bg-black rounded-lg mb-3 relative" style={{ height: '200px', border: '1px solid var(--border-light)' }}>
+                <div className="w-full flex flex-col items-center">
+                  <div className="bg-black rounded-lg mb-3 relative" style={{ width: '280px', height: '280px', border: '1px solid var(--border-light)' }}>
                     {/* Placeholder for live camera feed */}
                   </div>
-                  <button className="btn btn-primary w-full" onClick={() => {
+                  <button className="btn btn-primary w-full" style={{ maxWidth: '280px' }} onClick={() => {
                     setSelfieState('capturing');
                     setTimeout(() => setSelfieState('captured'), 1000);
                   }}>
@@ -216,8 +216,8 @@ export default function Agreement() {
               )}
 
               {selfieState === 'capturing' && (
-                <div className="w-full text-center">
-                  <div className="bg-black rounded-lg mb-3 flex items-center justify-center relative overflow-hidden" style={{ height: '200px', border: '1px solid var(--border-light)' }}>
+                <div className="w-full text-center flex flex-col items-center">
+                  <div className="bg-black rounded-lg mb-3 flex items-center justify-center relative overflow-hidden" style={{ width: '280px', height: '280px', border: '1px solid var(--border-light)' }}>
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(255,255,255,0.8)', animation: 'flash 0.5s ease-out forwards' }}></div>
                   </div>
                   <p className="text-sm text-muted">Processing...</p>
@@ -225,8 +225,8 @@ export default function Agreement() {
               )}
 
               {selfieState === 'captured' && (
-                <div className="w-full">
-                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ height: '200px', border: '2px solid var(--success)' }}>
+                <div className="w-full flex flex-col items-center">
+                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ width: '280px', height: '280px', border: '2px solid var(--success)' }}>
                     {profile?.aadhaar?.name === 'Robert' ? (
                       <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : profile?.aadhaar?.name === 'Chris' ? (
@@ -235,7 +235,7 @@ export default function Agreement() {
                       <span className="text-muted text-sm">Preview</span>
                     )}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full" style={{ maxWidth: '280px' }}>
                     <button className="btn btn-secondary flex-1" onClick={() => setSelfieState('camera')}>Retake</button>
                     <button className="btn btn-primary flex-1" onClick={() => setSelfieState('submitted')}>Submit</button>
                   </div>
