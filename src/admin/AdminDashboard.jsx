@@ -250,44 +250,73 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="card mt-6">
-          <h3 className="heading-sm mb-4">Application Funnel Drop-off</h3>
-          <div className="flex-col gap-4">
-            <div className="flex-between text-sm">
-              <span className="w-32">Started</span>
-              <div className="flex-1 mx-4 bg-secondary h-4 rounded overflow-hidden">
-                <div className="bg-accent h-full" style={{ width: '100%' }}></div>
+        <div className="card mt-6" style={{ background: 'linear-gradient(145deg, var(--bg-card), var(--bg-tertiary))', border: '1px solid var(--border-light)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+          <h3 className="heading-sm mb-5" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            Application Funnel Drop-off
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            
+            {/* Started */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--fs-sm)' }}>
+              <div style={{ width: '130px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(59, 130, 246, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60A5FA' }}>▶</div>
+                <span style={{ fontWeight: '500' }}>Started</span>
               </div>
-              <span className="w-12 text-right">{metrics.total}</span>
-            </div>
-            <div className="flex-between text-sm">
-              <span className="w-32">KYC Verified</span>
-              <div className="flex-1 mx-4 bg-secondary h-4 rounded overflow-hidden">
-                <div className="bg-info h-full" style={{ width: `${metrics.total > 0 ? (metrics.kycDone/metrics.total)*100 : 0}%` }}></div>
+              <div style={{ flex: 1, margin: '0 20px', background: 'var(--bg-secondary)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #3B82F6, #60A5FA)', borderRadius: '5px', transition: 'width 1s ease-out' }}></div>
               </div>
-              <span className="w-12 text-right">{metrics.kycDone}</span>
+              <div style={{ width: '40px', textAlign: 'right', fontWeight: '700', fontSize: 'var(--fs-md)' }}>{metrics.total}</div>
             </div>
-            <div className="flex-between text-sm">
-              <span className="w-32">Assessed</span>
-              <div className="flex-1 mx-4 bg-secondary h-4 rounded overflow-hidden">
-                <div className="bg-warning h-full" style={{ width: `${metrics.total > 0 ? (metrics.assessed/metrics.total)*100 : 0}%` }}></div>
+
+            {/* KYC Verified */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--fs-sm)' }}>
+              <div style={{ width: '130px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(52, 211, 153, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#34D399' }}>🛡</div>
+                <span style={{ fontWeight: '500' }}>KYC Verified</span>
               </div>
-              <span className="w-12 text-right">{metrics.assessed}</span>
-            </div>
-            <div className="flex-between text-sm">
-              <span className="w-32">Approved</span>
-              <div className="flex-1 mx-4 bg-secondary h-4 rounded overflow-hidden">
-                <div className="bg-success h-full" style={{ width: `${metrics.total > 0 ? (metrics.approved/metrics.total)*100 : 0}%` }}></div>
+              <div style={{ flex: 1, margin: '0 20px', background: 'var(--bg-secondary)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ width: `${metrics.total > 0 ? (metrics.kycDone/metrics.total)*100 : 0}%`, height: '100%', background: 'linear-gradient(90deg, #10B981, #34D399)', borderRadius: '5px', transition: 'width 1s ease-out' }}></div>
               </div>
-              <span className="w-12 text-right">{metrics.approved}</span>
+              <div style={{ width: '40px', textAlign: 'right', fontWeight: '700', fontSize: 'var(--fs-md)' }}>{metrics.kycDone}</div>
             </div>
-            <div className="flex-between text-sm">
-              <span className="w-32">Disbursed</span>
-              <div className="flex-1 mx-4 bg-secondary h-4 rounded overflow-hidden">
-                <div className="bg-success h-full opacity-75" style={{ width: `${metrics.total > 0 ? (metrics.disbursed/metrics.total)*100 : 0}%` }}></div>
+
+            {/* Assessed */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--fs-sm)' }}>
+              <div style={{ width: '130px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(251, 191, 36, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FBBF24' }}>⚡</div>
+                <span style={{ fontWeight: '500' }}>Assessed</span>
               </div>
-              <span className="w-12 text-right">{metrics.disbursed}</span>
+              <div style={{ flex: 1, margin: '0 20px', background: 'var(--bg-secondary)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ width: `${metrics.total > 0 ? (metrics.assessed/metrics.total)*100 : 0}%`, height: '100%', background: 'linear-gradient(90deg, #F59E0B, #FBBF24)', borderRadius: '5px', transition: 'width 1s ease-out' }}></div>
+              </div>
+              <div style={{ width: '40px', textAlign: 'right', fontWeight: '700', fontSize: 'var(--fs-md)' }}>{metrics.assessed}</div>
             </div>
+
+            {/* Approved */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--fs-sm)' }}>
+              <div style={{ width: '130px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10B981' }}>✓</div>
+                <span style={{ fontWeight: '500' }}>Approved</span>
+              </div>
+              <div style={{ flex: 1, margin: '0 20px', background: 'var(--bg-secondary)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ width: `${metrics.total > 0 ? (metrics.approved/metrics.total)*100 : 0}%`, height: '100%', background: 'linear-gradient(90deg, #059669, #10B981)', borderRadius: '5px', transition: 'width 1s ease-out' }}></div>
+              </div>
+              <div style={{ width: '40px', textAlign: 'right', fontWeight: '700', fontSize: 'var(--fs-md)' }}>{metrics.approved}</div>
+            </div>
+
+            {/* Disbursed */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 'var(--fs-sm)' }}>
+              <div style={{ width: '130px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(5, 150, 105, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669' }}>💸</div>
+                <span style={{ fontWeight: '500' }}>Disbursed</span>
+              </div>
+              <div style={{ flex: 1, margin: '0 20px', background: 'var(--bg-secondary)', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                <div style={{ width: `${metrics.total > 0 ? (metrics.disbursed/metrics.total)*100 : 0}%`, height: '100%', background: 'linear-gradient(90deg, #047857, #059669)', borderRadius: '5px', transition: 'width 1s ease-out' }}></div>
+              </div>
+              <div style={{ width: '40px', textAlign: 'right', fontWeight: '700', fontSize: 'var(--fs-md)' }}>{metrics.disbursed}</div>
+            </div>
+
           </div>
         </div>
       </div>
