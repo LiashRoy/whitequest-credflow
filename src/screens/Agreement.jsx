@@ -4,6 +4,7 @@ import ProgressBar from '../components/ProgressBar';
 import { formatINR } from '../engine/creditEngine';
 import { getDynamicProfile } from '../engine/mockProfiles';
 import robertSelfie from '../assets/robert-selfie.png';
+import chrisSelfie from '../assets/chris-selfie.png';
 
 export default function Agreement() {
   const { state, dispatch, nextStep } = useLoan();
@@ -228,6 +229,8 @@ export default function Agreement() {
                   <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ height: '200px', border: '2px solid var(--success)' }}>
                     {profile?.aadhaar?.name === 'Robert' ? (
                       <img src={robertSelfie} alt="Selfie" className="w-full h-full object-cover" />
+                    ) : profile?.aadhaar?.name === 'Chris' ? (
+                      <img src={chrisSelfie} alt="Selfie" className="w-full h-full object-cover" />
                     ) : (
                       <span className="text-muted text-sm">Preview</span>
                     )}
