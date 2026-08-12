@@ -236,8 +236,8 @@ export default function Agreement() {
                     )}
                   </div>
                   <div className="flex gap-2 w-full" style={{ maxWidth: '280px' }}>
-                    <button className="btn btn-secondary flex-1" onClick={() => setSelfieState('camera')}>Retake</button>
-                    <button className="btn btn-primary flex-1" onClick={() => setSelfieState('submitted')}>Submit</button>
+                    <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setSelfieState('camera')}>Retake</button>
+                    <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => setSelfieState('submitted')}>Submit</button>
                   </div>
                 </div>
               )}
