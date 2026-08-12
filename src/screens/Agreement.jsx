@@ -228,9 +228,9 @@ export default function Agreement() {
                 <div className="w-full">
                   <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ height: '200px', border: '2px solid var(--success)' }}>
                     {profile?.aadhaar?.name === 'Robert' ? (
-                      <img src={robertSelfie} alt="Selfie" className="w-full h-full object-cover" />
+                      <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : profile?.aadhaar?.name === 'Chris' ? (
-                      <img src={chrisSelfie} alt="Selfie" className="w-full h-full object-cover" />
+                      <img src={chrisSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : (
                       <span className="text-muted text-sm">Preview</span>
                     )}
