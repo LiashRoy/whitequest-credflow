@@ -350,42 +350,48 @@ export default function AdminDashboard() {
       </div>
 
       <div className="admin-dual-col mt-6">
-        <div className="card">
-          <h3 className="heading-sm mb-4">Decision Breakdown</h3>
-          <div className="flex-col gap-3">
-            <div className="flex-between p-3 bg-green-50/10 border border-green-900/30 rounded">
-              <span className="text-success font-medium">Approved Prime</span>
-              <span className="font-bold">{metrics.byStatus['APPROVED'] || 0}</span>
+        <div className="card" style={{ background: 'linear-gradient(145deg, var(--bg-card), var(--bg-tertiary))', border: '1px solid var(--border-light)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+          <h3 className="heading-sm mb-5" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Decision Breakdown
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '8px' }}>
+              <span style={{ color: '#10B981', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 8px #10B981' }}></div> Approved Prime</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.byStatus['APPROVED'] || 0}</span>
             </div>
-            <div className="flex-between p-3 bg-yellow-50/10 border border-yellow-900/30 rounded">
-              <span className="text-warning font-medium">Approved Conditional</span>
-              <span className="font-bold">{metrics.byStatus['APPROVED_CONDITIONS'] || 0}</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(251, 191, 36, 0.05)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '8px' }}>
+              <span style={{ color: '#FBBF24', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FBBF24', boxShadow: '0 0 8px #FBBF24' }}></div> Approved Conditional</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.byStatus['APPROVED_CONDITIONS'] || 0}</span>
             </div>
-            <div className="flex-between p-3 bg-red-50/10 border border-red-900/30 rounded">
-              <span className="text-error font-medium">Rejected</span>
-              <span className="font-bold">{metrics.rejected}</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px' }}>
+              <span style={{ color: '#EF4444', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EF4444', boxShadow: '0 0 8px #EF4444' }}></div> Rejected</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.rejected}</span>
             </div>
-            <div className="flex-between p-3 bg-blue-50/10 border border-blue-900/30 rounded">
-              <span className="text-info font-medium">Manual Review (KYC)</span>
-              <span className="font-bold">{metrics.flagged}</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '8px' }}>
+              <span style={{ color: '#60A5FA', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#60A5FA', boxShadow: '0 0 8px #60A5FA' }}></div> Manual Review (KYC)</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.flagged}</span>
             </div>
           </div>
         </div>
         
-        <div className="card">
-          <h3 className="heading-sm mb-4">Risk Distribution (DTI)</h3>
-          <div className="flex h-32 items-end gap-2 px-4 pb-6 border-b border-border relative">
-            <div className="flex-1 bg-success rounded-t opacity-80" style={{ height: '70%' }} title="<35%"></div>
-            <div className="flex-1 bg-warning rounded-t opacity-80" style={{ height: '40%' }} title="35-50%"></div>
-            <div className="flex-1 bg-error rounded-t opacity-80" style={{ height: '15%' }} title=">50%"></div>
+        <div className="card" style={{ background: 'linear-gradient(145deg, var(--bg-card), var(--bg-tertiary))', border: '1px solid var(--border-light)', boxShadow: '0 8px 32px rgba(0,0,0,0.2)' }}>
+          <h3 className="heading-sm mb-5" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent)' }}><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+            Risk Distribution (DTI)
+          </h3>
+          <div style={{ height: '180px', display: 'flex', alignItems: 'flex-end', gap: '16px', padding: '0 16px 30px', borderBottom: '1px solid var(--border)', position: 'relative' }}>
+            <div style={{ flex: 1, background: 'linear-gradient(180deg, #10B981, rgba(16,185,129,0.2))', height: '70%', borderRadius: '6px 6px 0 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', transition: 'height 1s ease-out' }} title="<35%"></div>
+            <div style={{ flex: 1, background: 'linear-gradient(180deg, #FBBF24, rgba(251,191,36,0.2))', height: '40%', borderRadius: '6px 6px 0 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', transition: 'height 1s ease-out' }} title="35-50%"></div>
+            <div style={{ flex: 1, background: 'linear-gradient(180deg, #EF4444, rgba(239,68,68,0.2))', height: '15%', borderRadius: '6px 6px 0 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', transition: 'height 1s ease-out' }} title=">50%"></div>
             
-            <div className="absolute bottom-0 left-0 w-full flex justify-around text-xs text-muted pt-2">
+            <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', display: 'flex', justifyContent: 'space-around', paddingTop: '10px', fontSize: '11px', color: 'var(--text-muted)', fontWeight: '500' }}>
               <span>Low (&lt;35%)</span>
               <span>Med (35-50%)</span>
               <span>High (&gt;50%)</span>
             </div>
           </div>
-          <p className="text-xs text-center text-muted mt-4">Illustrative portfolio DTI spread</p>
+          <p className="text-xs text-center text-muted mt-5" style={{ fontStyle: 'italic' }}>Illustrative portfolio DTI spread</p>
         </div>
       </div>
     </div>
