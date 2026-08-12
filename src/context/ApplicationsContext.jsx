@@ -233,9 +233,16 @@ export function aggregateMetrics(applications) {
     appId: a.id,
   })));
 
+  const decisionBreakdown = {
+    APPROVED: applications.filter(a => a.creditResult?.decision === 'APPROVED').length,
+    APPROVED_CONDITIONS: applications.filter(a => a.creditResult?.decision === 'APPROVED_CONDITIONS').length,
+    REJECTED: applications.filter(a => a.creditResult?.decision === 'REJECTED').length,
+    KYC_FLAG: applications.filter(a => a.creditResult?.decision === 'KYC_FLAG').length,
+  };
+
   return {
     total, byStatus, kycDone, assessed, approved, disbursed, rejected, flagged,
-    totalDisbursedAmt, avgTicket, avgScore, avgDTI, allConsents,
+    totalDisbursedAmt, avgTicket, avgScore, avgDTI, allConsents, decisionBreakdown
   };
 }
 

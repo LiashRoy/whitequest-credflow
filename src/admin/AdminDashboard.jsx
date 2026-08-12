@@ -358,19 +358,19 @@ export default function AdminDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '8px' }}>
               <span style={{ color: '#10B981', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 8px #10B981' }}></div> Approved Prime</span>
-              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.byStatus['APPROVED'] || 0}</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.APPROVED || 0}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(251, 191, 36, 0.05)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '8px' }}>
               <span style={{ color: '#FBBF24', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FBBF24', boxShadow: '0 0 8px #FBBF24' }}></div> Approved Conditional</span>
-              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.byStatus['APPROVED_CONDITIONS'] || 0}</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.APPROVED_CONDITIONS || 0}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px' }}>
               <span style={{ color: '#EF4444', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#EF4444', boxShadow: '0 0 8px #EF4444' }}></div> Rejected</span>
-              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.rejected}</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.REJECTED || 0}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '8px' }}>
               <span style={{ color: '#60A5FA', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#60A5FA', boxShadow: '0 0 8px #60A5FA' }}></div> Manual Review (KYC)</span>
-              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.flagged}</span>
+              <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.KYC_FLAG || 0}</span>
             </div>
           </div>
         </div>
