@@ -132,7 +132,7 @@ export default function Home() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     Prime Customer
                   </span>
-                  <span className="badge badge-success">CIBIL 782</span>
+                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 782</span>
                 </div>
                 <span className="text-xs text-muted font-normal text-left">Fast-track approval. Bypasses bank statement upload completely.</span>
               </button>
@@ -143,7 +143,7 @@ export default function Home() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
                     Near-Prime Customer
                   </span>
-                  <span className="badge badge-warning">CIBIL 710</span>
+                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 710</span>
                 </div>
                 <span className="text-xs text-muted font-normal text-left">Requires bank statement verification, but gets approved based on income.</span>
               </button>
@@ -154,7 +154,7 @@ export default function Home() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     Sub-Prime Customer
                   </span>
-                  <span className="badge badge-error">CIBIL 650</span>
+                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 650</span>
                 </div>
                 <span className="text-xs text-muted font-normal text-left">Requires bank statement verification. Rejected due to high DTI ratio.</span>
               </button>
