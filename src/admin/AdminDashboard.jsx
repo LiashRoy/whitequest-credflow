@@ -75,6 +75,9 @@ export default function AdminDashboard() {
               <p className="text-xs text-muted">Applicant</p>
               <p className="font-bold text-lg">{selectedApp.applicantName || 'Unknown'}</p>
               <p className="text-sm text-muted">{selectedApp.mobile}</p>
+              {selectedApp.employmentData?.email && (
+                <p className="text-sm text-muted">{selectedApp.employmentData.email}</p>
+              )}
             </div>
             <div className="text-right">
               <p className="text-xs text-muted mb-1">Status</p>
