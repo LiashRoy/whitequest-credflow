@@ -12,7 +12,7 @@ export const PROFILES = {
     aadhaar: {
       number: '2345 6789 0123',
       maskedNumber: 'XXXX XXXX 0123',
-      name: 'Rajesh Kumar Sharma',
+      name: 'Robert Williams',
       dob: '15/03/1990',
       gender: 'Male',
       address: '42, Sector 15, Gurugram, Haryana — 122001',
@@ -20,7 +20,7 @@ export const PROFILES = {
     },
     pan: {
       number: 'ABCPS1234R',
-      name: 'RAJESH KUMAR SHARMA',
+      name: 'ROBERT WILLIAMS',
       status: 'Valid',
     },
     bankStatement: {
@@ -35,12 +35,13 @@ export const PROFILES = {
     employment: {
       type: 'salaried',
       employer: 'Infosys Technologies Ltd.',
+      email: 'robert.williams@infosys.com',
       monthlyIncome: 120000,
       existingEMI: 5000,
     },
     creditScore: 782,
     creditHistory: '6+ years, no defaults',
-    upiId: 'rajesh.sharma@hdfcbank',
+    upiId: 'robert.williams@hdfcbank',
   },
 
   B: {
@@ -52,15 +53,15 @@ export const PROFILES = {
     aadhaar: {
       number: '3456 7890 1234',
       maskedNumber: 'XXXX XXXX 1234',
-      name: 'Priya Mehta',
+      name: 'Chris Evans',
       dob: '22/08/1993',
-      gender: 'Female',
+      gender: 'Male',
       address: 'B-204, Vasant Vihar, New Delhi — 110057',
       photo: null,
     },
     pan: {
       number: 'BDFPM5678Q',
-      name: 'PRIYA MEHTA',
+      name: 'CHRIS EVANS',
       status: 'Valid',
     },
     bankStatement: {
@@ -75,12 +76,13 @@ export const PROFILES = {
     employment: {
       type: 'salaried',
       employer: 'Wipro Technologies',
+      email: 'chris.evans@wipro.com',
       monthlyIncome: 55000,
       existingEMI: 18000,
     },
     creditScore: 710,
     creditHistory: '3 years, 1 late payment',
-    upiId: 'priya.mehta@icici',
+    upiId: 'chris.evans@icici',
   },
 
   C: {
@@ -92,15 +94,15 @@ export const PROFILES = {
     aadhaar: {
       number: '4567 8901 2345',
       maskedNumber: 'XXXX XXXX 2345',
-      name: 'Amit Verma',
+      name: 'Benedict Cumberbatch',
       dob: '10/12/1988',
       gender: 'Male',
-      address: '15/3, MG Road, Pune, Maharashtra — 411001',
+      address: '221B Baker Street, London (Simulated)',
       photo: null,
     },
     pan: {
       number: 'CEGPV9012S',
-      name: 'AMIT VERMA',
+      name: 'BENEDICT CUMBERBATCH',
       status: 'Valid',
     },
     bankStatement: {
@@ -115,12 +117,13 @@ export const PROFILES = {
     employment: {
       type: 'salaried',
       employer: 'Retail Solutions Pvt. Ltd.',
+      email: 'benedict@retailsolutions.com',
       monthlyIncome: 25000,
       existingEMI: 15000,
     },
     creditScore: 580,
     creditHistory: '2 years, 3 defaults',
-    upiId: 'amit.verma@sbi',
+    upiId: 'benedict@sbi',
   },
 
   D: {
@@ -235,6 +238,28 @@ export function getDynamicProfile(state) {
   if (state.demoName) {
     profile.aadhaar.name = state.demoName;
     profile.pan.name = state.demoName.toUpperCase();
+    
+    // Generate a matching UPI ID based on the new name
+    const cleanName = state.demoName.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const bank = profile.bankStatement?.bank ? profile.bankStatement.bank.toLowerCase().replace(/[^a-z]/g, '') : 'bank';
+    profile.upiId = `${cleanName}@${bank}`;
+    
+    // Generate a work email based on name and employer
+    const employerDomain = profile.employment?.employer 
+      ? profile.employment.employer.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/(ltd|pvt|inc|llc|technologies|solutions)/g, '') + '.com'
+      : 'company.com';
+    
+    if (!profile.employment) profile.employment = {};
+    profile.employment.email = `${cleanName}@${employerDomain}`;
+  } else {
+    // Generate default email if no demoName
+    if (profile.employment) {
+      const cleanName = profile.aadhaar.name.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+      const employerDomain = profile.employment.employer 
+        ? profile.employment.employer.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/(ltd|pvt|inc|llc|technologies|solutions)/g, '') + '.com'
+        : 'company.com';
+      profile.employment.email = `${cleanName}@${employerDomain}`;
+    }
   }
   
   if (state.demoPan) {

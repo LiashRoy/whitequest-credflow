@@ -130,8 +130,10 @@ export default function AadhaarKYC() {
       
       {kycState === 'success' && (
         <div className="mt-6 text-center w-full">
-          <div className="status-icon-success flex-center mx-auto mb-4 w-16 h-16 bg-green-100 text-green-600 rounded-full text-2xl font-bold">
-            ✓
+          <div className="status-icon status-icon-success mx-auto mb-4" style={{ animation: 'scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'var(--success)' }}>
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
           </div>
           <h2 className="heading-lg mb-4">Identity Verified!</h2>
           

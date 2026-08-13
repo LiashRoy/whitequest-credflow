@@ -129,9 +129,11 @@ export function assessCredit(params) {
     const approvedAmount = roundToThousand(Math.max(eligible, 10000));
     
     let rate = RATE_THIN_FILE;
-    if (tenure === 6) rate = 0;
-    else if (tenure === 9) rate = 2;
-    else if (tenure === 11) rate = 3.5;
+    if (tenure === 6) rate = 2;
+    else if (tenure === 9) rate = 3.5;
+    else if (tenure === 11) rate = 5;
+    else if (tenure === 15) rate = 6.5;
+    else if (tenure === 18) rate = 7.5;
     
     const emi = calculateEMI(approvedAmount, rate, tenure);
 
@@ -200,9 +202,11 @@ export function assessCredit(params) {
   const multiplier = isPrime ? MULTIPLIER_PRIME : MULTIPLIER_NEAR_PRIME;
   
   let rate = isPrime ? RATE_PRIME : RATE_NEAR_PRIME;
-  if (tenure === 6) rate = 0;
-  else if (tenure === 9) rate = 2;
-  else if (tenure === 11) rate = 3.5;
+  if (tenure === 6) rate = 2;
+  else if (tenure === 9) rate = 3.5;
+  else if (tenure === 11) rate = 5;
+  else if (tenure === 15) rate = 6.5;
+  else if (tenure === 18) rate = 7.5;
 
   const eligible = monthlyIncome * multiplier - existingEMI * 12;
   const approvedAmount = roundToThousand(Math.min(requestedAmount, Math.max(eligible, 10000)));

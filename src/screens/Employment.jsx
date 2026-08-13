@@ -8,6 +8,7 @@ export default function Employment() {
   
   const [type, setType] = useState('salaried');
   const [employer, setEmployer] = useState('');
+  const [email, setEmail] = useState('');
   const [monthlyIncome, setMonthlyIncome] = useState('');
   const [existingEMI, setExistingEMI] = useState(0);
 
@@ -17,12 +18,14 @@ export default function Employment() {
       if (profile && profile.employment) {
         setType(profile.employment.type || 'salaried');
         setEmployer(profile.employment.employer || profile.employment.businessName || '');
+        setEmail(profile.employment.email || '');
         setMonthlyIncome(profile.employment.monthlyIncome || '');
         setExistingEMI(profile.employment.existingEMI || 0);
       }
     } else if (state.employmentData) {
       setType(state.employmentData.type || 'salaried');
       setEmployer(state.employmentData.employer || state.employmentData.businessName || '');
+      setEmail(state.employmentData.email || '');
       setMonthlyIncome(state.employmentData.monthlyIncome || '');
       setExistingEMI(state.employmentData.existingEMI || 0);
     }
@@ -36,7 +39,7 @@ export default function Employment() {
   if (dti >= 35 && dti <= 50) dtiColor = 'var(--warning)';
   else if (dti > 50) dtiColor = 'var(--error)';
 
-  const isValid = type && employer && numIncome > 0;
+  const isValid = type && employer && email && numIncome > 0;
 
   const handleContinue = () => {
     if (!isValid) return;
@@ -45,6 +48,7 @@ export default function Employment() {
       payload: {
         type,
         ...(type === 'self-employed' ? { businessName: employer } : { employer }),
+        email,
         monthlyIncome: numIncome,
         existingEMI: numEmi
       }
@@ -90,6 +94,17 @@ export default function Employment() {
               value={employer}
               onChange={(e) => setEmployer(e.target.value)}
               placeholder={type === 'self-employed' ? 'Enter business name' : 'Enter employer name'}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Work Email</label>
+            <input 
+              type="email" 
+              className="form-input" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter work email"
             />
           </div>
 

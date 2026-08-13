@@ -12,7 +12,7 @@ export default function Disbursement() {
   const { creditResult, employmentData, testProfile } = state;
   const profile = testProfile ? getProfileById(testProfile) : detectProfile(employmentData);
 
-  const netAmount = creditResult ? (creditResult.approvedAmount - (creditResult.processingFee || 0)) : 0;
+  const netAmount = creditResult ? creditResult.approvedAmount : 0;
   const upiId = profile?.upiId || 'borrower@bank';
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function Disbursement() {
           </div>
         ) : (
           <div className="flex-col flex-center gap-4 text-center w-full" style={{ animation: 'fadeIn 0.5s ease-out' }}>
-            <div className="status-icon-success mb-2" style={{ width: '80px', height: '80px', animation: 'scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
+            <div className="status-icon status-icon-success mb-2" style={{ animation: 'scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'var(--success)' }}>
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
@@ -77,24 +77,24 @@ export default function Disbursement() {
             <h1 className="heading-xl text-success">{formatINR(netAmount)} Credited!</h1>
             <p className="text-body text-muted mb-4">Money is on its way to your bank account</p>
             
-            <div className="card w-full text-left bg-secondary p-4 rounded mb-6">
-              <div className="flex-between mb-2">
-                <span className="text-sm text-muted">UTR Number</span>
-                <span className="text-sm font-semibold">{state.disbursement?.utr}</span>
+            <div className="card w-full text-left bg-secondary p-6 rounded-xl mb-6 shadow-md border border-border">
+              <div className="mb-4 pb-4 border-b border-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="text-sm text-muted font-medium">UTR Number -</span>
+                <span className="text-sm font-semibold tracking-wide" style={{ textAlign: 'right' }}>{state.disbursement?.utr}</span>
               </div>
-              <div className="flex-between mb-2">
-                <span className="text-sm text-muted">Amount</span>
-                <span className="text-sm font-semibold text-success">{formatINR(state.disbursement?.amount || netAmount)}</span>
+              <div className="mb-4 pb-4 border-b border-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="text-sm text-muted font-medium">Amount -</span>
+                <span className="text-sm font-bold text-success" style={{ textAlign: 'right' }}>{formatINR(state.disbursement?.amount || netAmount)}</span>
               </div>
-              <div className="flex-between mb-2">
-                <span className="text-sm text-muted">Date &amp; Time</span>
-                <span className="text-sm font-semibold">
+              <div className="mb-4 pb-4 border-b border-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="text-sm text-muted font-medium">Date & Time -</span>
+                <span className="text-sm font-semibold" style={{ textAlign: 'right' }}>
                   {state.disbursement?.timestamp ? new Date(state.disbursement.timestamp).toLocaleString() : 'Just now'}
                 </span>
               </div>
-              <div className="flex-between">
-                <span className="text-sm text-muted">UPI ID</span>
-                <span className="text-sm font-semibold">{state.disbursement?.upiId}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="text-sm text-muted font-medium">UPI ID -</span>
+                <span className="text-sm font-semibold" style={{ textAlign: 'right' }}>{state.disbursement?.upiId}</span>
               </div>
             </div>
             

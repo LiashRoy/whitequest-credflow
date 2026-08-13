@@ -83,16 +83,15 @@ export default function Dashboard() {
           Download Loan Agreement
         </button>
 
-        <div className="card bg-secondary text-center p-4 mb-4">
+        <button className="btn btn-primary btn-block mb-4" onClick={() => { reset(); navigate('/'); }}>
+          Start New Application
+        </button>
+
+        <div className="card bg-secondary text-center p-4 mb-6">
           <h4 className="heading-sm mb-2">Need Help?</h4>
           <p className="text-sm text-muted mb-1">Email: support@whitequest.in</p>
           <p className="text-sm text-muted">Phone: 1800-123-4567</p>
         </div>
-
-        <button className="btn btn-primary btn-block mb-6" onClick={() => { reset(); navigate('/'); }}>
-          Start New Application
-        </button>
-        
       </div>
     </div>
   );

@@ -414,24 +414,25 @@ export default function AdminDashboard() {
             <span className="text-xs text-muted">{sortedConsents.length} records</span>
           </div>
           <table className="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-border text-xs text-muted">
-                <th className="p-3">Timestamp</th>
-                <th className="p-3">Applicant</th>
-                <th className="p-3">Consent Type</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">IP / Device (Simulated)</th>
+            <thead className="bg-secondary" style={{ opacity: 0.9 }}>
+              <tr className="border-b border-border text-xs" style={{ textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+                <th className="p-3 font-semibold" style={{ textAlign: 'left' }}>Timestamp</th>
+                <th className="p-3 font-semibold" style={{ textAlign: 'left' }}>Applicant</th>
+                <th className="p-3 font-semibold" style={{ textAlign: 'left' }}>Consent Type</th>
+                <th className="p-3 font-semibold" style={{ textAlign: 'left' }}>Status</th>
+                <th className="p-3 font-semibold" style={{ textAlign: 'left' }}>IP / Device (Simulated)</th>
               </tr>
             </thead>
             <tbody>
+              <tr style={{ height: '16px' }}></tr>
               {sortedConsents.slice(0, 15).map((log, i) => (
                 <tr key={i} className="border-b border-border last:border-0 hover:bg-secondary">
                   <td className="p-3 whitespace-nowrap text-xs text-muted">
                     {new Date(log.timestamp).toLocaleString()}
                   </td>
                   <td className="p-3">
-                    <span className="font-medium">{log.applicantName}</span>
-                    <span className="block text-xs text-muted">{log.borrowerId || 'Unknown'}</span>
+                    <div className="font-medium">{log.applicantName}</div>
+                    <div className="text-xs text-muted mt-1">{log.borrowerId || 'Unknown'}</div>
                   </td>
                   <td className="p-3">
                     <span className="badge badge-neutral bg-opacity-10 text-xs py-1 px-2">{log.type}</span>

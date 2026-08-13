@@ -26,9 +26,11 @@ export default function Landing() {
   };
 
   const PLANS = [
-    { tenure: 6, rate: 0 },
-    { tenure: 9, rate: 2 },
-    { tenure: 11, rate: 3.5 }
+    { tenure: 6, rate: 2 },
+    { tenure: 9, rate: 3.5 },
+    { tenure: 11, rate: 5 },
+    { tenure: 15, rate: 6.5 },
+    { tenure: 18, rate: 7.5 }
   ];
   
   return (
@@ -89,7 +91,7 @@ export default function Landing() {
                 <div className="emi-plan-right">
                   <div className="text-right">
                     <p className="heading-sm text-accent m-0">{formatINR(emi)} <span className="text-xs text-muted font-normal">/ mo</span></p>
-                    <p className="text-[10px] text-muted m-0 mt-1">Total: {formatINR(total)}</p>
+                    <p className="text-[10px] text-muted m-0 mt-1">Total: {formatINR(total)} <span className="opacity-75">| Int: {formatINR(interest)}</span></p>
                   </div>
                   <div className="emi-plan-arrow">→</div>
                 </div>
