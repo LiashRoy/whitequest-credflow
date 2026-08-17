@@ -364,7 +364,7 @@ export default function AdminDashboard() {
               <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.APPROVED || 0}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(251, 191, 36, 0.05)', border: '1px solid rgba(251, 191, 36, 0.2)', borderRadius: '8px' }}>
-              <span style={{ color: '#FBBF24', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FBBF24', boxShadow: '0 0 8px #FBBF24' }}></div> Approved Conditional</span>
+              <span style={{ color: '#FBBF24', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FBBF24', boxShadow: '0 0 8px #FBBF24' }}></div> Manual Approval</span>
               <span style={{ fontWeight: '700', fontSize: 'var(--fs-lg)' }}>{metrics.decisionBreakdown?.APPROVED_CONDITIONS || 0}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px' }}>

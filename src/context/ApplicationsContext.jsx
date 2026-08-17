@@ -11,7 +11,7 @@ export const STATUS_CONFIG = {
   DOCUMENTS_VERIFIED:  { label: 'Documents Verified',         color: 'info',     order: 3 },
   UNDER_REVIEW:        { label: 'Under Credit Review',        color: 'warning',  order: 4 },
   APPROVED:            { label: 'Approved',                   color: 'success',  order: 5 },
-  APPROVED_CONDITIONS: { label: 'Approved (Conditional)',     color: 'warning',  order: 5 },
+  APPROVED_CONDITIONS: { label: 'Manual Approval',          color: 'warning',  order: 5 },
   REJECTED:            { label: 'Rejected',                   color: 'error',    order: 5 },
   KYC_FLAG:            { label: 'Manual Review (KYC Flag)',   color: 'info',     order: 5 },
   AGREEMENT_SIGNED:    { label: 'Agreement Signed',           color: 'success',  order: 6 },
