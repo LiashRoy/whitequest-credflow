@@ -147,17 +147,27 @@ export default function Dashboard() {
 
             {/* Next EMI Due */}
             {nextEMI && (
-              <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--accent)', background: 'rgba(59,130,246,0.05)' }}>
-                <div className="flex-between">
-                  <div>
-                    <p className="text-xs text-muted mb-1">Next EMI Due</p>
-                    <p className="font-bold" style={{ fontSize: '1.15rem' }}>{formatINR(nextEMI.amount)}</p>
-                    <p className="text-xs text-muted mt-1">{nextEMI.date}</p>
+              <div className="card" style={{ padding: '0', border: '1px solid var(--border-accent)', background: 'linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))', overflow: 'hidden' }}>
+                <div style={{ padding: '1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 10px var(--accent)' }}></div>
+                        <p className="text-xs font-semibold text-accent uppercase tracking-wider">Next EMI Due</p>
+                      </div>
+                      <p className="font-bold" style={{ fontSize: '1.8rem', lineHeight: '1.2' }}>{formatINR(nextEMI.amount)}</p>
+                      <p className="text-sm text-muted mt-2" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        {nextEMI.date}
+                      </p>
+                    </div>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <p className="text-xs text-muted mb-1">Breakup</p>
-                    <p className="text-xs">Principal: {formatINR(nextEMI.principal)}</p>
-                    <p className="text-xs text-muted">Interest: {formatINR(nextEMI.interest)}</p>
+                </div>
+                <div style={{ padding: '0.75rem 1.25rem', background: 'rgba(0,0,0,0.2)', borderTop: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span className="text-xs font-medium text-muted">Amount Breakup</span>
+                  <div style={{ display: 'flex', gap: '16px' }}>
+                    <span className="text-xs font-medium"><span className="text-muted">Principal:</span> {formatINR(nextEMI.principal)}</span>
+                    <span className="text-xs font-medium"><span className="text-muted">Interest:</span> {formatINR(nextEMI.interest)}</span>
                   </div>
                 </div>
               </div>
