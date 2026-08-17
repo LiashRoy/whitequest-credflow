@@ -266,6 +266,13 @@ export default function Dashboard() {
             >
               Download Loan Agreement
             </button>
+            
+            <div style={{ textAlign: 'center', marginTop: '1rem', marginBottom: '1rem' }}>
+              <p className="text-xs text-muted" style={{ opacity: 0.6 }}>
+                Loans powered by our RBI-registered NBFC partner:<br/>
+                <strong>Apex Financial Services Ltd.</strong>
+              </p>
+            </div>
           </div>
         )}
 
