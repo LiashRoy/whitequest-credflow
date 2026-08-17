@@ -142,13 +142,13 @@ export default function Home() {
                     className="card"
                     onClick={() => setModalStep('new')}
                     style={{ cursor: 'pointer', padding: '2rem', textAlign: 'center', border: '1px solid var(--border)', transition: 'all 0.2s ease', background: 'var(--bg-secondary)' }}
-                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--accent)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--text-primary)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
                     onMouseLeave={e => { e.currentTarget.style.border = '1px solid var(--border)'; e.currentTarget.style.background = 'var(--bg-secondary)'; }}
                   >
-                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', border: '1px solid var(--border-light)' }}>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-primary)' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                     </div>
-                    <h3 className="heading-sm mb-1">New User</h3>
+                    <h3 className="heading-sm mb-1 text-white">New User</h3>
                     <p className="text-xs text-muted">First time applying for a loan</p>
                   </div>
 
@@ -156,13 +156,13 @@ export default function Home() {
                     className="card"
                     onClick={() => setModalStep('returning')}
                     style={{ cursor: 'pointer', padding: '2rem', textAlign: 'center', border: '1px solid var(--border)', transition: 'all 0.2s ease', background: 'var(--bg-secondary)' }}
-                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--accent)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--text-primary)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
                     onMouseLeave={e => { e.currentTarget.style.border = '1px solid var(--border)'; e.currentTarget.style.background = 'var(--bg-secondary)'; }}
                   >
-                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', border: '1px solid var(--border-light)' }}>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-primary)' }}><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                     </div>
-                    <h3 className="heading-sm mb-1">Registered User</h3>
+                    <h3 className="heading-sm mb-1 text-white">Registered User</h3>
                     <p className="text-xs text-muted">Already have an account with us</p>
                   </div>
                 </div>
