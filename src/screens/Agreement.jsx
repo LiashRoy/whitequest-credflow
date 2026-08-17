@@ -228,11 +228,11 @@ export default function Agreement() {
               {selfieState === 'captured' && (
                 <div className="w-full flex flex-col items-center">
                   <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ width: '280px', height: '280px', border: '2px solid var(--success)' }}>
-                    {profile?.aadhaar?.name === 'Robert Williams' ? (
+                    {state.testProfile === 'A' ? (
                       <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                    ) : profile?.aadhaar?.name === 'Chris Evans' ? (
+                    ) : state.testProfile === 'B' ? (
                       <img src={chrisSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                    ) : profile?.aadhaar?.name === 'Mark Taylor' ? (
+                    ) : (state.testProfile === 'F' || state.testProfile === 'F_LOAN') ? (
                       <img src={markSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : (
                       <span className="text-muted text-sm">Preview</span>
