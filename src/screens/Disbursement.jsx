@@ -103,11 +103,8 @@ export default function Disbursement() {
             </div>
             
             <div className="w-full flex-col gap-3" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button className="btn btn-primary btn-block" onClick={nextStep}>
-                View Loan Dashboard →
-              </button>
-              <button className="btn btn-secondary btn-block" onClick={() => { reset(); navigate('/'); }}>
-                Start New Application
+              <button className="btn btn-secondary btn-block" onClick={() => { dispatch({ type: 'LOGOUT_TO_HOME' }); navigate('/'); }}>
+                Exit
               </button>
             </div>
           </div>

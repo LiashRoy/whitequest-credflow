@@ -145,6 +145,29 @@ function reducer(state, action) {
       return { ...state, showProfileSwitcher: !state.showProfileSwitcher };
     case 'HIDE_PROFILE_SWITCHER':
       return { ...state, showProfileSwitcher: false };
+    case 'LOGOUT_TO_HOME': {
+      const isNowReturning = !!state.creditResult || state.isReturningUser;
+      const loanData = state.creditResult ? {
+        loanId: state.loanId || 'WQ-2026-NEW',
+        approvedAmount: (state.existingLoanData?.approvedAmount || 0) + state.creditResult.approvedAmount,
+        interestRate: state.creditResult.interestRate,
+        tenure: state.loanParams.tenure,
+        emi: state.creditResult.emi + (state.existingLoanData?.emi || 0),
+        emiPaid: 0,
+        disbursedOn: state.disbursement?.timestamp || new Date().toISOString(),
+        nextDueDate: '05 Sep 2026',
+        totalPaid: state.existingLoanData?.totalPaid || 0,
+        remainingAmount: state.creditResult.totalPayable + (state.existingLoanData?.remainingAmount || 0),
+        status: 'Active',
+      } : state.existingLoanData;
+
+      return {
+        ...getInitialState(state.testProfile),
+        isReturningUser: isNowReturning,
+        existingLoanData: loanData,
+        showProfileSwitcher: false,
+      };
+    }
     case 'RESET':
       return getInitialState(action.profileId || 'A');
     default:
