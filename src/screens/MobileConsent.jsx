@@ -3,8 +3,15 @@ import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 
 export default function MobileConsent() {
-  const { dispatch, nextStep } = useLoan();
-  const [mobile, setMobile] = useState('');
+  const { state, dispatch, nextStep } = useLoan();
+  const [mobile, setMobile] = useState(() => {
+    if (!state.demoName) return '';
+    if (state.demoName.includes('Robert')) return '9876543210';
+    if (state.demoName.includes('Chris')) return '8765432109';
+    if (state.demoName.includes('Benedict')) return '7654321098';
+    if (state.demoName.includes('Karan')) return '6543210987';
+    return '9999999999';
+  });
   const [name, setName] = useState(state.demoName || '');
   const [consents, setConsents] = useState({
     credit: false,
