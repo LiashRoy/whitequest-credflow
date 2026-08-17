@@ -95,8 +95,8 @@ export default function ReturningUserLogin() {
           <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(16, 185, 129, 0.3)', boxShadow: '0 0 40px rgba(16,185,129,0.2)' }}>
             <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           </div>
-          <h2 className="heading-xl text-center mb-2" style={{ fontSize: '2rem' }}>Welcome back, {state.demoName}!</h2>
-          <p className="text-body text-muted text-center" style={{ fontSize: '1.1rem' }}>Your account has been securely verified.</p>
+          <h2 className="heading-xl text-center mb-2" style={{ fontSize: '2rem', textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(16,185,129,0.3)' }}>Welcome back, {state.demoName}!</h2>
+          <p className="text-body text-muted text-center" style={{ fontSize: '1.1rem', textShadow: '0 0 15px rgba(255,255,255,0.1)' }}>Your account has been securely verified.</p>
         </div>
       </div>
     );
