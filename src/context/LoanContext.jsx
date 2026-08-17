@@ -20,6 +20,20 @@ const PANS = {
   'F': 'FGHPM7890V',
   'F_LOAN': 'FGHPM7890V',
 };
+const CLEARED_LOAN_MOCK = {
+  loanId: 'WQ-2025-00123',
+  approvedAmount: 150000,
+  interestRate: 6,
+  tenure: 6,
+  emi: 25445,
+  emiPaid: 6,
+  disbursedOn: '2025-01-10',
+  nextDueDate: null,
+  totalPaid: 152670,
+  remainingAmount: 0,
+  status: 'Closed',
+};
+
 // Mock existing loan data for Mark B (has active loan)
 const EXISTING_LOAN_MOCK = {
   loanId: 'WQ-2026-00412',
@@ -27,17 +41,20 @@ const EXISTING_LOAN_MOCK = {
   interestRate: 5,
   tenure: 12,
   emi: 25685,
-  emiPaid: 4,
-  disbursedOn: '2026-04-15',
-  nextDueDate: '05 Sep 2026',
-  totalPaid: 102740,
-  remainingAmount: 205380,
+  emiPaid: 9, // at least 2/3 paid (9/12)
+  disbursedOn: '2026-02-15',
+  nextDueDate: '15 Nov 2026',
+  totalPaid: 231165,
+  remainingAmount: 77055,
   status: 'Active',
 };
 
 function getInitialState(profileId = 'A') {
   const isReturning = profileId === 'F' || profileId === 'F_LOAN';
-  const hasExistingLoan = profileId === 'F_LOAN';
+  // For 'F' (cleared loan) and 'F_LOAN' (active loan)
+  const existingLoanData = profileId === 'F_LOAN' ? EXISTING_LOAN_MOCK : 
+                           (profileId === 'F' ? CLEARED_LOAN_MOCK : null);
+
   // For returning users with F_LOAN, use the base 'F' profile for mock data
   const effectiveProfileId = (profileId === 'F_LOAN') ? 'F' : profileId;
 
@@ -82,7 +99,7 @@ function getInitialState(profileId = 'A') {
 
     // Returning user state
     isReturningUser: isReturning,
-    existingLoanData: hasExistingLoan ? EXISTING_LOAN_MOCK : null,
+    existingLoanData,
 
     // Demo mode
     testProfile: effectiveProfileId,

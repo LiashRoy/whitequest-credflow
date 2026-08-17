@@ -69,9 +69,11 @@ export default function Dashboard() {
           <div className="flex-between">
             <div>
               <p className="text-xs text-muted mb-1">Loan ID</p>
-              <p className="font-semibold text-sm">{loanId || 'CF-XXXX-XXXX'}</p>
+              <p className="font-semibold text-sm">{loanId || existingLoanData?.loanId || 'CF-XXXX-XXXX'}</p>
             </div>
-            <div className="badge badge-success" style={{ alignSelf: 'flex-start' }}>ACTIVE</div>
+            <div className={`badge ${remainingAmount === 0 && totalEMIs > 0 ? 'badge-secondary' : 'badge-success'}`} style={{ alignSelf: 'flex-start' }}>
+              {remainingAmount === 0 && totalEMIs > 0 ? 'CLEARED' : 'ACTIVE'}
+            </div>
           </div>
         </div>
 
