@@ -8,11 +8,39 @@ export default function AdminDashboard() {
   const { applications, resetToSeed } = useApplications();
   const [activeTab, setActiveTab] = useState('applications');
   const [selectedApp, setSelectedApp] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const metrics = aggregateMetrics(applications);
   
   // Sort applications by updatedAt descending
   const sortedApps = [...applications].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+  if (!isAuthenticated) {
+    return (
+      <div className="screen" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--bg-primary)' }}>
+        <div className="card" style={{ maxWidth: '400px', width: '100%', padding: '2rem' }}>
+          <div className="text-center mb-6">
+            <h2 className="heading-lg font-logo mb-2">White<span>Quest</span> Admin</h2>
+            <p className="text-sm text-muted">Please sign in to access the portal</p>
+          </div>
+          
+          <div className="form-group mb-4">
+            <label className="text-xs font-medium mb-1 block">Username</label>
+            <input type="text" className="form-input w-full" value="admin@whitequest.in" readOnly />
+          </div>
+          
+          <div className="form-group mb-6">
+            <label className="text-xs font-medium mb-1 block">Password</label>
+            <input type="password" className="form-input w-full" value="********" readOnly />
+          </div>
+          
+          <button className="btn btn-cta btn-block" onClick={() => setIsAuthenticated(true)}>
+            Secure Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const renderSidebar = () => (
     <div className="admin-sidebar">
