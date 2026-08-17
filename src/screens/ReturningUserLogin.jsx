@@ -44,36 +44,42 @@ export default function ReturningUserLogin() {
           <p className="text-sm text-muted text-center mt-1">Login with your registered mobile number</p>
         </div>
 
-        <div className="card mb-4" style={{ padding: '1.5rem' }}>
-          <label className="text-xs font-medium text-muted mb-2 block">Registered Mobile Number</label>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <span className="text-sm text-muted">+91</span>
+        <div className="mt-2 w-full">
+          <div className="form-group mb-6" style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', fontWeight: '600', pointerEvents: 'none' }}>
+              +91
+            </div>
             <input
               type="text"
               className="form-input"
               value={phone}
               readOnly
-              style={{ flex: 1, letterSpacing: '2px', fontWeight: 600 }}
+              style={{ paddingLeft: '52px', fontWeight: 600, letterSpacing: '2px' }}
             />
           </div>
 
           {!otpSent ? (
-            <button className="btn btn-cta btn-block mt-4" onClick={handleSendOTP}>
+            <button className="btn btn-primary btn-block mb-6" onClick={handleSendOTP}>
               Send OTP
             </button>
           ) : (
             <>
-              <label className="text-xs font-medium text-muted mb-2 block mt-4">Enter OTP</label>
-              <input
-                type="text"
-                className="form-input"
-                value={otpValue}
-                readOnly
-                maxLength={6}
-                style={{ letterSpacing: '8px', textAlign: 'center', fontWeight: 700, fontSize: '1.2rem' }}
-              />
+              <div className="form-group mb-6">
+                <input
+                  type="text"
+                  className="form-input"
+                  value={otpValue}
+                  readOnly
+                  maxLength={6}
+                  placeholder="Enter OTP"
+                  style={{ letterSpacing: '8px', textAlign: 'center', fontWeight: 700, fontSize: '1.2rem' }}
+                />
+                <p className="text-xs text-muted text-center mt-2">
+                  Auto-reading OTP...
+                </p>
+              </div>
               <button 
-                className="btn btn-cta btn-block mt-4" 
+                className="btn btn-primary btn-block mb-6" 
                 onClick={handleVerify}
                 disabled={verifying}
               >
