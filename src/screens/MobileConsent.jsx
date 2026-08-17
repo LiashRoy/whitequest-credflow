@@ -5,6 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 export default function MobileConsent() {
   const { dispatch, nextStep } = useLoan();
   const [mobile, setMobile] = useState('');
+  const [name, setName] = useState(state.demoName || '');
   const [consents, setConsents] = useState({
     credit: false,
     digilocker: false,
@@ -111,7 +112,21 @@ export default function MobileConsent() {
       <div className="mt-6 w-full">
         <h2 className="heading-lg">Create your account</h2>
         <p className="text-body text-muted mt-2 mb-6">Enter your mobile number to get started.</p>
-        
+        <div className="form-group mb-4" style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <input 
+            type="text" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)}
+            className="form-input" 
+            placeholder="Full Name"
+            style={{ paddingLeft: '44px', fontWeight: 600 }}
+            disabled={otpSent}
+          />
+        </div>
+
         <div className="form-group mb-6" style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)', fontWeight: '600', pointerEvents: 'none' }}>
             +91
