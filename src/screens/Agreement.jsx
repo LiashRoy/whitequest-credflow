@@ -5,6 +5,7 @@ import { formatINR } from '../engine/creditEngine';
 import { getDynamicProfile } from '../engine/mockProfiles';
 import robertSelfie from '../assets/robert-selfie.png';
 import chrisSelfie from '../assets/chris-selfie.png';
+import markSelfie from '../assets/mark-selfie.png';
 
 export default function Agreement() {
   const { state, dispatch, nextStep } = useLoan();
@@ -231,6 +232,8 @@ export default function Agreement() {
                       <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : profile?.aadhaar?.name === 'Chris' ? (
                       <img src={chrisSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+                    ) : profile?.aadhaar?.name === 'Mark Taylor' ? (
+                      <img src={markSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : (
                       <span className="text-muted text-sm">Preview</span>
                     )}
