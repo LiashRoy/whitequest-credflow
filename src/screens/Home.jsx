@@ -180,7 +180,7 @@ export default function Home() {
                 <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Choose a borrower profile to test different flow branches.</p>
                 
                 <div className="flex flex-col gap-4">
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('A')}>
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('A')} style={{ overflow: 'hidden' }}>
                     <div className="flex flex-between w-full mb-1">
                       <span className="font-semibold text-white flex gap-2 items-center">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
@@ -188,10 +188,10 @@ export default function Home() {
                       </span>
                       <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 782</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left">Fast-track approval. Bypasses bank statement upload completely.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Fast-track approval. Bypasses bank statement upload completely.</span>
                   </button>
 
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('B')}>
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('B')} style={{ overflow: 'hidden' }}>
                     <div className="flex flex-between w-full mb-1">
                       <span className="font-semibold text-white flex gap-2 items-center">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
@@ -199,10 +199,10 @@ export default function Home() {
                       </span>
                       <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 710</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left">Requires bank statement verification, but gets approved based on income.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Requires bank statement verification, but gets approved based on income.</span>
                   </button>
 
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('C')}>
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('C')} style={{ overflow: 'hidden' }}>
                     <div className="flex flex-between w-full mb-1">
                       <span className="font-semibold text-white flex gap-2 items-center">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -210,7 +210,7 @@ export default function Home() {
                       </span>
                       <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 650</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left">Requires bank statement verification. Rejected due to high DTI ratio.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Requires bank statement verification. Rejected due to high DTI ratio.</span>
                   </button>
                 </div>
               </>
@@ -227,7 +227,7 @@ export default function Home() {
                 <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Select a demo scenario for the registered user flow.</p>
                 
                 <div className="flex flex-col gap-4">
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F')}>
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F')} style={{ overflow: 'hidden' }}>
                     <div className="flex flex-between w-full mb-1">
                       <span className="font-semibold text-white flex gap-2 items-center">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -235,10 +235,10 @@ export default function Home() {
                       </span>
                       <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 760</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left">Previously registered user with no active loans. Skips KYC and applies for a fresh loan directly.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Previously registered user with no active loans. Skips KYC and applies for a fresh loan directly.</span>
                   </button>
 
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F_LOAN')}>
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F_LOAN')} style={{ overflow: 'hidden' }}>
                     <div className="flex flex-between w-full mb-1">
                       <span className="font-semibold text-white flex gap-2 items-center">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
@@ -246,7 +246,7 @@ export default function Home() {
                       </span>
                       <span className="badge badge-neutral border border-border text-muted bg-opacity-10">TOP-UP</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left">Has an active ₹3,00,000 loan with 4 EMIs paid. Views existing loan summary, then applies for a top-up loan.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Has an active ₹3,00,000 loan with 4 EMIs paid. Views existing loan summary, then applies for a top-up loan.</span>
                   </button>
                 </div>
               </>
