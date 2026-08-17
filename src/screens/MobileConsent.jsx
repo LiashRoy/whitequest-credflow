@@ -13,6 +13,7 @@ export default function MobileConsent() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [verifying, setVerifying] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const inputRefs = useRef([]);
   
   const isMobileValid = mobile.length === 10 && /^\d+$/.test(mobile);
@@ -43,13 +44,66 @@ export default function MobileConsent() {
     setVerifying(true);
     setTimeout(() => {
       setVerifying(false);
-      dispatch({ type: 'SET_MOBILE', mobile });
-      dispatch({ type: 'ADD_CONSENT', payload: { type: 'credit_bureau', text: 'I authorize WhiteQuest to pull my credit report from CIBIL/Experian for the purpose of evaluating this loan application.', status: 'granted' } });
-      dispatch({ type: 'ADD_CONSENT', payload: { type: 'digilocker', text: 'I authorize WhiteQuest to access my Aadhaar and PAN details via DigiLocker for digital KYC verification.', status: 'granted' } });
-      dispatch({ type: 'ADD_CONSENT', payload: { type: 'terms', text: 'I have read and agree to the Terms of Service and Privacy Policy.', status: 'granted' } });
-      nextStep();
+      setIsSuccess(true);
+      
+      setTimeout(() => {
+        dispatch({ type: 'SET_MOBILE', mobile });
+        dispatch({ type: 'ADD_CONSENT', payload: { type: 'credit_bureau', text: 'I authorize WhiteQuest to pull my credit report from CIBIL/Experian for the purpose of evaluating this loan application.', status: 'granted' } });
+        dispatch({ type: 'ADD_CONSENT', payload: { type: 'digilocker', text: 'I authorize WhiteQuest to access my Aadhaar and PAN details via DigiLocker for digital KYC verification.', status: 'granted' } });
+        dispatch({ type: 'ADD_CONSENT', payload: { type: 'terms', text: 'I have read and agree to the Terms of Service and Privacy Policy.', status: 'granted' } });
+        nextStep();
+      }, 4000);
     }, 1500);
   };
+  
+  if (isSuccess) {
+    return (
+      <div className="screen" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', position: 'relative', overflow: 'hidden', margin: 0, padding: 0 }}>
+        <style>{`
+          @keyframes fadeInOutMessage {
+            0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+            15% { opacity: 1; transform: translateY(0) scale(1); }
+            75% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-10px) scale(1.02); }
+          }
+          @keyframes fadeInOutBg {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+          }
+          .success-highlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150vw;
+            height: 150vw;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(0,0,0,0) 60%);
+            animation: fadeInOutBg 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            pointer-events: none;
+            z-index: 0;
+          }
+          .success-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInOutMessage 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        `}</style>
+        <div className="success-highlight"></div>
+        <div className="success-content w-full">
+          <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(16, 185, 129, 0.3)', boxShadow: '0 0 40px rgba(16,185,129,0.2)' }}>
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <h2 className="heading-xl text-center mb-2" style={{ fontSize: '2rem', textShadow: '0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(16,185,129,0.3)' }}>Hi {state.demoName}!</h2>
+          <p className="text-body text-muted text-center" style={{ fontSize: '1.1rem', textShadow: '0 0 15px rgba(255,255,255,0.1)' }}>Your mobile number has been verified.</p>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="screen">
