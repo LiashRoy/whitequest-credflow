@@ -7,14 +7,34 @@ import { formatINR, generateSchedule, totalInterest } from '../engine/creditEngi
 export default function Dashboard() {
   const { state, reset } = useLoan();
   const navigate = useNavigate();
-  const { creditResult, loanId, disbursement } = state;
+  const { creditResult, loanId, disbursement, existingLoanData } = state;
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'schedule' | 'details'
   
-  const schedule = creditResult ? generateSchedule(
+  // Generate schedule for existing loan (if any)
+  let existingSchedule = [];
+  if (existingLoanData) {
+    existingSchedule = generateSchedule(
+      existingLoanData.approvedAmount, 
+      existingLoanData.interestRate, 
+      existingLoanData.tenure
+    ).map(item => ({
+      ...item,
+      loanName: 'Existing Top-Up',
+      status: item.emiNumber <= existingLoanData.emiPaid ? 'Paid' : 'Upcoming'
+    }));
+  }
+
+  // Generate schedule for new loan
+  const newSchedule = creditResult ? generateSchedule(
     creditResult.approvedAmount, 
     creditResult.interestRate, 
     creditResult.tenure
-  ) : [];
+  ).map(item => ({
+    ...item,
+    loanName: existingLoanData ? 'New Loan' : 'Loan'
+  })) : [];
+
+  const schedule = [...existingSchedule, ...newSchedule];
 
   const paidCount = schedule.filter(s => s.status === 'Paid').length;
   const upcomingCount = schedule.filter(s => s.status === 'Upcoming').length;
@@ -22,7 +42,12 @@ export default function Dashboard() {
   const paidAmount = schedule.filter(s => s.status === 'Paid').reduce((sum, s) => sum + s.amount, 0);
   const remainingAmount = schedule.filter(s => s.status === 'Upcoming').reduce((sum, s) => sum + s.amount, 0);
   const totalPayable = paidAmount + remainingAmount;
-  const totalInt = creditResult ? totalInterest(creditResult.approvedAmount, creditResult.interestRate, creditResult.tenure) : 0;
+  
+  // Total interest combines both if existing is present
+  const newLoanInt = creditResult ? totalInterest(creditResult.approvedAmount, creditResult.interestRate, creditResult.tenure) : 0;
+  const existingLoanInt = existingLoanData ? totalInterest(existingLoanData.approvedAmount, existingLoanData.interestRate, existingLoanData.tenure) : 0;
+  const totalInt = newLoanInt + existingLoanInt;
+  
   const progressPercent = totalEMIs > 0 ? Math.round((paidCount / totalEMIs) * 100) : 0;
 
   // Next upcoming EMI
@@ -181,8 +206,8 @@ export default function Dashboard() {
             <h3 className="heading-sm mb-1 mt-2">Full EMI Schedule</h3>
             <div className="card bg-secondary p-0" style={{ overflow: 'hidden' }}>
               {/* Table Header */}
-              <div style={{ display: 'grid', gridTemplateColumns: '0.6fr 1fr 1fr 1fr 1fr 0.8fr', padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
-                <span>#</span>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 0.8fr', padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <span>Loan / #</span>
                 <span>Due Date</span>
                 <span>EMI</span>
                 <span>Principal</span>
@@ -197,7 +222,7 @@ export default function Dashboard() {
                     key={idx} 
                     style={{ 
                       display: 'grid', 
-                      gridTemplateColumns: '0.6fr 1fr 1fr 1fr 1fr 0.8fr', 
+                      gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 0.8fr', 
                       padding: '10px 16px', 
                       borderBottom: idx < schedule.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
                       fontSize: '12px',
@@ -205,7 +230,10 @@ export default function Dashboard() {
                       alignItems: 'center'
                     }}
                   >
-                    <span className="text-muted">{item.installment}</span>
+                    <span className="text-muted flex flex-col">
+                      <span style={{ fontSize: '9px', fontWeight: 'bold' }}>{item.loanName}</span>
+                      <span>#{item.emiNumber}</span>
+                    </span>
                     <span>{item.date}</span>
                     <span className="font-medium">{formatINR(item.amount)}</span>
                     <span>{formatINR(item.principal)}</span>
