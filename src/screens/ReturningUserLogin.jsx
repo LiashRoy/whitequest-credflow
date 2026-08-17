@@ -7,6 +7,7 @@ export default function ReturningUserLogin() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [verifying, setVerifying] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const inputRefs = useRef([]);
 
   const phone = '9876501234'; // Mark's registered number
@@ -37,27 +38,48 @@ export default function ReturningUserLogin() {
     setVerifying(true);
     setTimeout(() => {
       setVerifying(false);
-      // If existing loan data is present, go to step 2 (ExistingLoanSummary)
-      // Otherwise skip to step 3 (Landing/Loan params)
-      if (state.existingLoanData) {
-        nextStep(); // goes to step 2 = ExistingLoanSummary
-      } else {
-        // Skip to loan params (step 3 in returning flow)
-        dispatch({ type: 'SET_STEP', step: 3 });
-      }
+      setIsSuccess(true);
+      
+      setTimeout(() => {
+        // If existing loan data is present, go to step 2 (ExistingLoanSummary)
+        // Otherwise skip to step 3 (Landing/Loan params)
+        if (state.existingLoanData) {
+          nextStep(); // goes to step 2 = ExistingLoanSummary
+        } else {
+          // Skip to loan params (step 3 in returning flow)
+          dispatch({ type: 'SET_STEP', step: 3 });
+        }
+      }, 2000);
     }, 1500);
   };
+
+  if (isSuccess) {
+    return (
+      <div className="screen">
+        <ProgressBar />
+        <div className="screen-center" style={{ animation: 'fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+          <div className="flex-center flex-col">
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h2 className="heading-xl text-center mb-2">Welcome back, {state.demoName}!</h2>
+            <p className="text-body text-muted text-center">Your account has been securely verified.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="screen">
       <ProgressBar />
       <div className="screen-center">
-        <div className="flex-center flex-col mb-6">
+        <div className="flex-center flex-col mb-8">
           <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', border: '1px solid var(--border)' }}>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-primary)' }}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-primary)' }}><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
           </div>
-          <h2 className="heading-lg text-center">Welcome back, {state.demoName}!</h2>
-          <p className="text-sm text-muted text-center mt-1">Login with your registered mobile number</p>
+          <h2 className="heading-lg text-center">Login to your account</h2>
+          <p className="text-sm text-muted text-center mt-1">Enter your registered mobile number</p>
         </div>
 
         <div className="mt-2 w-full">
