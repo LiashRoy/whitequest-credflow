@@ -113,11 +113,11 @@ export default function Disbursement() {
                 </>
               ) : (
                 <>
-                  <button className="btn btn-primary btn-block" onClick={nextStep}>
-                    View Loan Dashboard →
+                  <button className="btn btn-primary btn-block" onClick={() => dispatch({ type: 'SET_STEP', step: 1 })}>
+                    Sign In to View Dashboard
                   </button>
-                  <button className="btn btn-secondary btn-block" onClick={() => { reset(); navigate('/'); }}>
-                    Start New Application
+                  <button className="btn btn-secondary btn-block" onClick={() => { dispatch({ type: 'LOGOUT_TO_HOME' }); navigate('/'); }}>
+                    Exit to Homepage
                   </button>
                 </>
               )}
