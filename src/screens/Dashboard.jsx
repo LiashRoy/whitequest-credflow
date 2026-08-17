@@ -1,79 +1,224 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
-import { formatINR, generateSchedule } from '../engine/creditEngine';
+import { formatINR, generateSchedule, totalInterest } from '../engine/creditEngine';
 
 export default function Dashboard() {
   const { state, reset } = useLoan();
   const navigate = useNavigate();
   const { creditResult, loanId, disbursement } = state;
+  const [showFullSchedule, setShowFullSchedule] = useState(false);
   
   const schedule = creditResult ? generateSchedule(
     creditResult.approvedAmount, 
     creditResult.interestRate, 
-    creditResult.tenure, 
-    3
+    creditResult.tenure
   ) : [];
+
+  const paidCount = schedule.filter(s => s.status === 'Paid').length;
+  const upcomingCount = schedule.filter(s => s.status === 'Upcoming').length;
+  const totalEMIs = schedule.length;
+  const paidAmount = schedule.filter(s => s.status === 'Paid').reduce((sum, s) => sum + s.amount, 0);
+  const remainingAmount = schedule.filter(s => s.status === 'Upcoming').reduce((sum, s) => sum + s.amount, 0);
+  const totalPayable = paidAmount + remainingAmount;
+  const totalInt = creditResult ? totalInterest(creditResult.approvedAmount, creditResult.interestRate, creditResult.tenure) : 0;
+  const progressPercent = totalEMIs > 0 ? Math.round((paidCount / totalEMIs) * 100) : 0;
+
+  // Next upcoming EMI
+  const nextEMI = schedule.find(s => s.status === 'Upcoming');
+
+  const displaySchedule = showFullSchedule ? schedule : schedule.slice(0, 6);
 
   return (
     <div className="screen">
       <ProgressBar />
       
       <div className="screen-header mt-4 mb-4">
-        <h1 className="heading-xl">Your Loan Details</h1>
+        <h1 className="heading-xl">Loan Dashboard</h1>
+        <p className="text-sm text-muted mt-1">Track your repayment progress</p>
       </div>
 
       <div className="screen-center flex-col gap-4">
-        <div className="card card-accent mb-4">
-          <div className="flex-between mb-4 pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        
+        {/* Loan ID & Status Header */}
+        <div className="card card-accent" style={{ padding: '1.25rem 1.5rem' }}>
+          <div className="flex-between">
             <div>
               <p className="text-xs text-muted mb-1">Loan ID</p>
               <p className="font-semibold text-sm">{loanId || 'CF-XXXX-XXXX'}</p>
             </div>
             <div className="badge badge-success" style={{ alignSelf: 'flex-start' }}>ACTIVE</div>
           </div>
-          
-          <div className="offer-grid mb-4">
-            <div className="offer-item">
-              <span className="offer-item-label">Amount</span>
-              <span className="offer-item-value">{formatINR(creditResult?.approvedAmount || 0)}</span>
+        </div>
+
+        {/* Progress Overview Card */}
+        <div className="card bg-secondary" style={{ padding: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            
+            {/* Circular Progress */}
+            <div style={{ position: 'relative', width: '90px', height: '90px', flexShrink: 0 }}>
+              <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="8" />
+                <circle 
+                  cx="50" cy="50" r="42" fill="none" 
+                  stroke="var(--accent)" strokeWidth="8" 
+                  strokeLinecap="round"
+                  strokeDasharray={`${2 * Math.PI * 42}`}
+                  strokeDashoffset={`${2 * Math.PI * 42 * (1 - progressPercent / 100)}`}
+                  style={{ transition: 'stroke-dashoffset 1s ease-out' }}
+                />
+              </svg>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontSize: '18px', fontWeight: 700, color: 'var(--accent)' }}>{progressPercent}%</span>
+                <span style={{ fontSize: '9px', color: 'var(--text-muted)', marginTop: '2px' }}>PAID</span>
+              </div>
             </div>
-            <div className="offer-item">
-              <span className="offer-item-label">Interest</span>
-              <span className="offer-item-value">{creditResult?.interestRate || 0}% p.a.</span>
+            
+            {/* Stats */}
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <div>
+                  <p className="text-xs text-muted">EMIs Paid</p>
+                  <p className="font-bold" style={{ fontSize: '1.1rem', color: '#10B981' }}>{paidCount} <span className="text-xs text-muted font-normal">of {totalEMIs}</span></p>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <p className="text-xs text-muted">EMIs Left</p>
+                  <p className="font-bold" style={{ fontSize: '1.1rem' }}>{upcomingCount}</p>
+                </div>
+              </div>
+              <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.08)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: `${progressPercent}%`, height: '100%', background: 'linear-gradient(90deg, #10B981, var(--accent))', borderRadius: '3px', transition: 'width 1s ease-out' }} />
+              </div>
             </div>
-            <div className="offer-item">
-              <span className="offer-item-label">Tenure</span>
-              <span className="offer-item-value">{creditResult?.tenure || 0} Mo</span>
-            </div>
-            <div className="offer-item">
-              <span className="offer-item-label">EMI</span>
-              <span className="offer-item-value">{formatINR(creditResult?.emi || 0)}</span>
-            </div>
-          </div>
-          
-          <div className="text-xs text-center mt-2 opacity-80">
-            Disbursed on {disbursement?.timestamp ? new Date(disbursement.timestamp).toLocaleDateString() : 'N/A'}
           </div>
         </div>
 
+        {/* Key Financial Summary Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
+            <p className="text-xs text-muted mb-1">Loan Amount</p>
+            <p className="font-bold" style={{ fontSize: '1rem' }}>{formatINR(creditResult?.approvedAmount || 0)}</p>
+          </div>
+          <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
+            <p className="text-xs text-muted mb-1">Interest Rate</p>
+            <p className="font-bold" style={{ fontSize: '1rem' }}>{creditResult?.interestRate || 0}% <span className="text-xs text-muted font-normal">p.a.</span></p>
+          </div>
+          <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
+            <p className="text-xs text-muted mb-1">Total Interest</p>
+            <p className="font-bold" style={{ fontSize: '1rem', color: '#FBBF24' }}>{formatINR(totalInt)}</p>
+          </div>
+          <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
+            <p className="text-xs text-muted mb-1">Total Payable</p>
+            <p className="font-bold" style={{ fontSize: '1rem' }}>{formatINR(totalPayable)}</p>
+          </div>
+        </div>
+
+        {/* Amount Paid vs Remaining */}
+        <div className="card bg-secondary" style={{ padding: '1.25rem' }}>
+          <div className="flex-between mb-3">
+            <p className="text-sm font-semibold">Payment Progress</p>
+            <p className="text-xs text-muted">{formatINR(paidAmount)} of {formatINR(totalPayable)}</p>
+          </div>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <div style={{ flex: 1, height: '10px', background: 'rgba(255,255,255,0.06)', borderRadius: '5px', overflow: 'hidden' }}>
+              <div style={{ width: `${totalPayable > 0 ? (paidAmount / totalPayable * 100) : 0}%`, height: '100%', background: '#10B981', borderRadius: '5px', transition: 'width 1s ease-out' }} />
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981' }} />
+              <span className="text-xs text-muted">Paid: {formatINR(paidAmount)}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }} />
+              <span className="text-xs text-muted">Remaining: {formatINR(remainingAmount)}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Next EMI Due */}
+        {nextEMI && (
+          <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--accent)', background: 'rgba(59,130,246,0.05)' }}>
+            <div className="flex-between">
+              <div>
+                <p className="text-xs text-muted mb-1">Next EMI Due</p>
+                <p className="font-bold" style={{ fontSize: '1.15rem' }}>{formatINR(nextEMI.amount)}</p>
+                <p className="text-xs text-muted mt-1">{nextEMI.date}</p>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <p className="text-xs text-muted mb-1">Breakup</p>
+                <p className="text-xs">Principal: {formatINR(nextEMI.principal)}</p>
+                <p className="text-xs text-muted">Interest: {formatINR(nextEMI.interest)}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full EMI Schedule Table */}
         <div className="mb-4">
-          <h3 className="heading-sm mb-3">Upcoming EMIs</h3>
-          <div className="schedule-list card bg-secondary">
-            {schedule.map((item, idx) => (
-              <div key={idx} className="schedule-item flex-between py-3 border-b border-border last:border-0" style={{ borderBottom: idx < schedule.length - 1 ? '1px solid var(--border-color)' : 'none' }}>
-                <div>
-                  <div className="text-xs text-muted mb-1">EMI {item.installment}</div>
-                  <div className="schedule-item-date font-semibold">{item.date}</div>
-                </div>
-                <div className="text-right">
-                  <div className="schedule-item-amount font-bold mb-1">{formatINR(item.amount)}</div>
-                  <div className="badge badge-neutral text-xs inline-block">Upcoming</div>
-                </div>
+          <h3 className="heading-sm mb-3">EMI Schedule</h3>
+          <div className="card bg-secondary p-0" style={{ overflow: 'hidden' }}>
+            {/* Table Header */}
+            <div style={{ display: 'grid', gridTemplateColumns: '0.6fr 1fr 1fr 1fr 1fr 0.8fr', padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.06)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+              <span>#</span>
+              <span>Due Date</span>
+              <span>EMI</span>
+              <span>Principal</span>
+              <span>Interest</span>
+              <span style={{ textAlign: 'right' }}>Status</span>
+            </div>
+            
+            {/* Table Rows */}
+            {displaySchedule.map((item, idx) => (
+              <div 
+                key={idx} 
+                style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: '0.6fr 1fr 1fr 1fr 1fr 0.8fr', 
+                  padding: '10px 16px', 
+                  borderBottom: idx < displaySchedule.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                  fontSize: '12px',
+                  opacity: item.status === 'Paid' ? 0.6 : 1,
+                  alignItems: 'center'
+                }}
+              >
+                <span className="text-muted">{item.installment}</span>
+                <span>{item.date}</span>
+                <span className="font-medium">{formatINR(item.amount)}</span>
+                <span>{formatINR(item.principal)}</span>
+                <span className="text-muted">{formatINR(item.interest)}</span>
+                <span style={{ textAlign: 'right' }}>
+                  {item.status === 'Paid' ? (
+                    <span style={{ color: '#10B981', fontSize: '11px', fontWeight: 600 }}>✓ Paid</span>
+                  ) : (
+                    <span style={{ color: 'var(--text-muted)', fontSize: '11px' }}>Upcoming</span>
+                  )}
+                </span>
               </div>
             ))}
+            
+            {/* Show More / Less */}
+            {schedule.length > 6 && (
+              <div 
+                style={{ padding: '12px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer' }}
+                onClick={() => setShowFullSchedule(!showFullSchedule)}
+              >
+                <span className="text-xs" style={{ color: 'var(--accent)', fontWeight: 500 }}>
+                  {showFullSchedule ? `Show Less ↑` : `View All ${schedule.length} EMIs ↓`}
+                </span>
+              </div>
+            )}
           </div>
+        </div>
+
+        {/* Disbursement Info */}
+        <div className="card bg-secondary" style={{ padding: '1rem 1.25rem' }}>
+          <p className="text-xs text-muted mb-1">Disbursed On</p>
+          <p className="text-sm font-medium">{disbursement?.timestamp ? new Date(disbursement.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) : 'N/A'}</p>
+          {disbursement?.utr && (
+            <p className="text-xs text-muted mt-1">UTR - {disbursement.utr}</p>
+          )}
         </div>
 
         <button 
