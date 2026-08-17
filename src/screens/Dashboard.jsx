@@ -5,7 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 import { formatINR, generateSchedule, totalInterest } from '../engine/creditEngine';
 
 export default function Dashboard() {
-  const { state, reset } = useLoan();
+  const { state, dispatch, reset } = useLoan();
   const navigate = useNavigate();
   const { creditResult, loanId, disbursement, existingLoanData } = state;
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'schedule' | 'details'
@@ -316,9 +316,15 @@ export default function Dashboard() {
 
         {/* Global Action always at bottom */}
         <div style={{ marginTop: '16px' }}>
-          <button className="btn btn-primary btn-block" onClick={() => { reset(); navigate('/'); }}>
-            Start New Application
-          </button>
+          {!creditResult ? (
+            <button className="btn btn-cta btn-block" onClick={() => dispatch({ type: 'SET_STEP', step: 3 })}>
+              Apply for New Loan →
+            </button>
+          ) : (
+            <button className="btn btn-primary btn-block" onClick={() => { reset(); navigate('/'); }}>
+              Start New Application
+            </button>
+          )}
         </div>
       </div>
       <style>{`

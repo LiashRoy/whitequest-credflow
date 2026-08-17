@@ -28,7 +28,7 @@ const NEW_USER_SCREENS = {
 // Returning user flow: skip KYC, go straight to loan params after login
 const RETURNING_USER_SCREENS = {
   1: ReturningUserLogin,    // Login with registered phone
-  2: ExistingLoanSummary,   // Show existing loan (if any)
+  2: Dashboard,             // Show Dashboard
   3: Landing,               // Loan parameters
   4: Employment,            // Employment (pre-filled)
   5: CreditAssessment,      // Credit assessment
