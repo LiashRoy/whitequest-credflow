@@ -53,15 +53,15 @@ export default function Dashboard() {
         {/* Custom Tab Navigation */}
         <div style={{ display: 'flex', gap: '8px', padding: '4px', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border)' }}>
           <button 
-            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'overview' ? 'var(--accent)' : 'transparent', color: activeTab === 'overview' ? '#fff' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
+            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'overview' ? 'var(--accent)' : 'transparent', color: activeTab === 'overview' ? '#000' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
             onClick={() => setActiveTab('overview')}
           >Overview</button>
           <button 
-            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'schedule' ? 'var(--accent)' : 'transparent', color: activeTab === 'schedule' ? '#fff' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
+            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'schedule' ? 'var(--accent)' : 'transparent', color: activeTab === 'schedule' ? '#000' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
             onClick={() => setActiveTab('schedule')}
           >Schedule</button>
           <button 
-            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'details' ? 'var(--accent)' : 'transparent', color: activeTab === 'details' ? '#fff' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
+            style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, background: activeTab === 'details' ? 'var(--accent)' : 'transparent', color: activeTab === 'details' ? '#000' : 'var(--text-muted)', transition: 'all 0.2s', border: 'none', cursor: 'pointer' }}
             onClick={() => setActiveTab('details')}
           >Details</button>
         </div>
