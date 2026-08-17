@@ -139,7 +139,17 @@ export default function Dashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
                 <p className="text-xs text-muted mb-1">Loan Amount</p>
-                <p className="font-bold" style={{ fontSize: '1rem' }}>{formatINR(creditResult?.approvedAmount || 0)}</p>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <p className="font-bold" style={{ fontSize: '1.2rem' }}>
+                    {formatINR((existingLoanData?.approvedAmount || 0) + (creditResult?.approvedAmount || 0))}
+                  </p>
+                  {existingLoanData && (
+                    <p className="text-xs text-muted mt-1" style={{ fontSize: '0.7rem' }}>
+                      {formatINR(existingLoanData.approvedAmount)} (Existing) <br/>
+                      <span style={{ color: '#10B981' }}>+ {formatINR(creditResult?.approvedAmount || 0)} (Top-up)</span>
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
                 <p className="text-xs text-muted mb-1">Interest Rate</p>
