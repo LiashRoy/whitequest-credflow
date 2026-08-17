@@ -49,22 +49,48 @@ export default function ReturningUserLogin() {
           // Skip to loan params (step 3 in returning flow)
           dispatch({ type: 'SET_STEP', step: 3 });
         }
-      }, 2000);
+      }, 3500);
     }, 1500);
   };
 
   if (isSuccess) {
     return (
-      <div className="screen">
-        <ProgressBar />
-        <div className="screen-center" style={{ animation: 'fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-          <div className="flex-center flex-col">
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            </div>
-            <h2 className="heading-xl text-center mb-2">Welcome back, {state.demoName}!</h2>
-            <p className="text-body text-muted text-center">Your account has been securely verified.</p>
+      <div className="screen" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', position: 'relative', overflow: 'hidden', margin: 0, padding: 0 }}>
+        <style>{`
+          @keyframes fadeScaleInOut {
+            0% { opacity: 0; transform: scale(0.95); }
+            15% { opacity: 1; transform: scale(1); }
+            85% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.05); }
+          }
+          .success-highlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150vw;
+            height: 150vw;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(0,0,0,0) 60%);
+            animation: fadeScaleInOut 3.5s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 0;
+          }
+          .success-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeScaleInOut 3.5s ease-in-out forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        `}</style>
+        <div className="success-highlight"></div>
+        <div className="success-content w-full">
+          <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', border: '1px solid rgba(16, 185, 129, 0.3)', boxShadow: '0 0 40px rgba(16,185,129,0.2)' }}>
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           </div>
+          <h2 className="heading-xl text-center mb-2" style={{ fontSize: '2rem' }}>Welcome back, {state.demoName}!</h2>
+          <p className="text-body text-muted text-center" style={{ fontSize: '1.1rem' }}>Your account has been securely verified.</p>
         </div>
       </div>
     );
