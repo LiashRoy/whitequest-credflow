@@ -101,12 +101,16 @@ export default function Disbursement() {
                 <span className="text-sm font-semibold" style={{ textAlign: 'right' }}>{state.disbursement?.bankAccount}<br/><span className="text-xs text-muted">{state.disbursement?.ifsc}</span></span>
               </div>
             </div>
-            
             <div className="w-full flex-col gap-3" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {!state.isReturningUser ? (
-                <button className="btn btn-secondary btn-block" onClick={() => { dispatch({ type: 'LOGOUT_TO_HOME' }); navigate('/'); }}>
-                  Exit
-                </button>
+                <>
+                  <button className="btn btn-primary btn-block" onClick={() => { dispatch({ type: 'LOGOUT_TO_HOME' }); navigate('/apply'); }}>
+                    Sign In to View Dashboard
+                  </button>
+                  <button className="btn btn-secondary btn-block" onClick={() => { dispatch({ type: 'LOGOUT_TO_HOME' }); navigate('/'); }}>
+                    Exit to Homepage
+                  </button>
+                </>
               ) : (
                 <>
                   <button className="btn btn-primary btn-block" onClick={nextStep}>
