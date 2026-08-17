@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 
 export default function ReturningUserLogin() {
   const { state, dispatch, nextStep } = useLoan();
   const [otpSent, setOtpSent] = useState(false);
-  const [otpValue, setOtpValue] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [verifying, setVerifying] = useState(false);
+  const inputRefs = useRef([]);
 
   const phone = '9876501234'; // Mark's registered number
+  const isOtpComplete = otp.every(d => d !== '');
+
+  const handleOtpChange = (index, value) => {
+    if (!/^\d*$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    if (value && index < 5) inputRefs.current[index + 1].focus();
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
 
   const handleSendOTP = () => {
     dispatch({ type: 'SET_MOBILE', mobile: phone });
     setOtpSent(true);
     // Auto-fill OTP for demo
-    setTimeout(() => setOtpValue('786543'), 800);
+    setTimeout(() => setOtp(['7', '8', '6', '5', '4', '3']), 800);
   };
 
   const handleVerify = () => {
@@ -65,15 +81,21 @@ export default function ReturningUserLogin() {
           ) : (
             <>
               <div className="form-group mb-6">
-                <input
-                  type="text"
-                  className="form-input"
-                  value={otpValue}
-                  readOnly
-                  maxLength={6}
-                  placeholder="Enter OTP"
-                  style={{ letterSpacing: '8px', textAlign: 'center', fontWeight: 700, fontSize: '1.2rem' }}
-                />
+                <div className="otp-container mb-2 flex-center gap-2" style={{ display: 'flex', justifyContent: 'center' }}>
+                  {otp.map((digit, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOtpChange(index, e.target.value)}
+                      onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                      ref={el => inputRefs.current[index] = el}
+                      className="otp-box form-input text-center text-lg w-12"
+                      style={{ width: '48px', height: '48px' }}
+                    />
+                  ))}
+                </div>
                 <p className="text-xs text-muted text-center mt-2">
                   Auto-reading OTP...
                 </p>
@@ -81,7 +103,7 @@ export default function ReturningUserLogin() {
               <button 
                 className="btn btn-primary btn-block mb-6" 
                 onClick={handleVerify}
-                disabled={verifying}
+                disabled={!isOtpComplete || verifying}
               >
                 {verifying ? (
                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
