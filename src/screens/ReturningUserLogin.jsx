@@ -49,7 +49,7 @@ export default function ReturningUserLogin() {
           // Skip to loan params (step 3 in returning flow)
           dispatch({ type: 'SET_STEP', step: 3 });
         }
-      }, 3500);
+      }, 4000);
     }, 1500);
   };
 
@@ -57,11 +57,17 @@ export default function ReturningUserLogin() {
     return (
       <div className="screen" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', position: 'relative', overflow: 'hidden', margin: 0, padding: 0 }}>
         <style>{`
-          @keyframes fadeScaleInOut {
-            0% { opacity: 0; transform: scale(0.95); }
-            15% { opacity: 1; transform: scale(1); }
-            85% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.05); }
+          @keyframes fadeInOutMessage {
+            0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+            15% { opacity: 1; transform: translateY(0) scale(1); }
+            75% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-10px) scale(1.02); }
+          }
+          @keyframes fadeInOutBg {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
           }
           .success-highlight {
             position: absolute;
@@ -71,14 +77,14 @@ export default function ReturningUserLogin() {
             width: 150vw;
             height: 150vw;
             background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(0,0,0,0) 60%);
-            animation: fadeScaleInOut 3.5s ease-in-out forwards;
+            animation: fadeInOutBg 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             pointer-events: none;
             z-index: 0;
           }
           .success-content {
             position: relative;
             z-index: 1;
-            animation: fadeScaleInOut 3.5s ease-in-out forwards;
+            animation: fadeInOutMessage 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             display: flex;
             flex-direction: column;
             align-items: center;
