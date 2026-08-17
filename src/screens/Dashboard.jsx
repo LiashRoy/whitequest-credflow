@@ -239,7 +239,7 @@ export default function Dashboard() {
               </div>
               <div className="flex-between">
                 <span className="text-xs text-muted">Bank Account</span>
-                <span className="text-sm font-medium">{disbursement?.upiId || 'N/A'}</span>
+                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || 'N/A'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || ''}</span></span>
               </div>
             </div>
 

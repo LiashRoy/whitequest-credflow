@@ -15,7 +15,8 @@ export default function Disbursement() {
   const profile = testProfile ? getProfileById(testProfile) : detectProfile(employmentData);
 
   const netAmount = creditResult ? creditResult.approvedAmount : 0;
-  const upiId = profile?.upiId || 'borrower@bank';
+  const bankAccount = profile?.bankStatement?.accountNumber || 'XXXX XXXX 1234';
+  const ifsc = profile?.bankStatement?.ifsc || 'BANK0001234';
 
   useEffect(() => {
     if (phase === 'processing') {
@@ -36,7 +37,8 @@ export default function Disbursement() {
             utr: generateUTR(), 
             amount: netAmount, 
             timestamp: new Date().toISOString(), 
-            upiId: upiId 
+            bankAccount,
+            ifsc 
           } 
         });
         dispatch({ type: 'SET_LOAN_ID', loanId: generateLoanId() });
@@ -48,7 +50,7 @@ export default function Disbursement() {
         clearInterval(interval);
       };
     }
-  }, [phase, dispatch, netAmount, upiId]);
+  }, [phase, dispatch, netAmount, bankAccount, ifsc]);
 
   return (
     <div className="screen">
@@ -58,8 +60,8 @@ export default function Disbursement() {
         {phase === 'processing' ? (
           <div className="flex-col flex-center gap-4 text-center">
             <div className="loading-spinner" style={{ width: '60px', height: '60px', borderWidth: '4px' }}></div>
-            <h2 className="heading-lg mt-4">Disbursing to your bank account...</h2>
-            <p className="text-body text-muted">UPI ID: {upiId}</p>
+            <h2 className="heading-lg mt-4">Disbursing via NEFT/IMPS...</h2>
+            <p className="text-body text-muted">A/C: {bankAccount} • IFSC: {ifsc}</p>
             <div className="heading-xl text-accent" style={{ animation: 'pulse 1.5s infinite' }}>
               {formatINR(netAmount)}
             </div>
@@ -95,8 +97,8 @@ export default function Disbursement() {
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="text-sm text-muted font-medium">UPI ID -</span>
-                <span className="text-sm font-semibold" style={{ textAlign: 'right' }}>{state.disbursement?.upiId}</span>
+                <span className="text-sm text-muted font-medium">Bank Account -</span>
+                <span className="text-sm font-semibold" style={{ textAlign: 'right' }}>{state.disbursement?.bankAccount}<br/><span className="text-xs text-muted">{state.disbursement?.ifsc}</span></span>
               </div>
             </div>
             
