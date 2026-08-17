@@ -211,7 +211,7 @@ export const PROFILES = {
 
   F: {
     id: 'F',
-    label: 'Returning User (Mark)',
+    label: 'Returning User (Mark) - Cleared Loan',
     tagline: 'Registered user — returning for a new loan',
     icon: '🔵',
     color: '#3B82F6',
@@ -249,6 +249,47 @@ export const PROFILES = {
     creditHistory: '5+ years, no defaults',
     upiId: 'mark.taylor@kotak',
     mobile: '9876501234',
+  },
+
+  F_LOAN: {
+    id: 'F_LOAN',
+    label: 'Returning User (Mark) - Active Loan',
+    tagline: 'Registered user — has an active ₹3L top-up loan',
+    icon: '🔷',
+    color: '#2563EB',
+    aadhaar: {
+      number: '6789 0123 4567',
+      maskedNumber: 'XXXX XXXX 4567',
+      name: 'Mark Taylor',
+      dob: '28/07/1991',
+      gender: 'Male',
+      address: '15, Banjara Hills, Hyderabad, Telangana — 500034',
+      photo: null,
+    },
+    pan: {
+      number: 'FGHPM7890V',
+      name: 'MARK TAYLOR',
+      status: 'Valid',
+    },
+    bankStatement: {
+      bank: 'Kotak Mahindra Bank',
+      accountNumber: 'XXXX XXXX 6789',
+      ifsc: 'KKBK0006789',
+      avgBalance3m: 195000,
+      salaryCredits: [95000, 96000, 95000],
+      avgMonthlyCredit: 98000,
+      months: ['May 2026', 'Jun 2026', 'Jul 2026'],
+    },
+    employment: {
+      type: 'salaried',
+      employer: 'HCL Technologies Ltd.',
+      email: 'mark.taylor@hcl.com',
+      monthlyIncome: 95000,
+      existingEMI: 33685,
+    },
+    creditScore: 760,
+    creditHistory: '5+ years, no defaults',
+    upiId: 'mark.taylor@kotak',
   },
 };
 

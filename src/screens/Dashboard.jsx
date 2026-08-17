@@ -20,7 +20,7 @@ export default function Dashboard() {
     ).map(item => ({
       ...item,
       loanName: 'Existing Top-Up',
-      status: item.emiNumber <= existingLoanData.emiPaid ? 'Paid' : 'Upcoming'
+      status: item.installment <= existingLoanData.emiPaid ? 'Paid' : 'Upcoming'
     }));
   }
 
@@ -244,7 +244,7 @@ export default function Dashboard() {
                   >
                     <span className="text-muted flex flex-col">
                       <span style={{ fontSize: '9px', fontWeight: 'bold' }}>{item.loanName}</span>
-                      <span>#{item.emiNumber}</span>
+                      <span>#{item.installment}</span>
                     </span>
                     <span>{item.date}</span>
                     <span className="font-medium">{formatINR(item.amount)}</span>

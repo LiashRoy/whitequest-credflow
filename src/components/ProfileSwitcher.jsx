@@ -8,11 +8,8 @@ export default function ProfileSwitcher() {
   if (!showProfileSwitcher) return null;
 
   const handleSelect = (profileId) => {
-    reset();
-    // After reset, set the selected profile
-    setTimeout(() => {
-      dispatch({ type: 'SET_TEST_PROFILE', profile: profileId });
-    }, 0);
+    reset(profileId);
+    dispatch({ type: 'HIDE_PROFILE_SWITCHER' });
   };
 
   return (
