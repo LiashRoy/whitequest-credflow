@@ -228,9 +228,9 @@ export default function Agreement() {
               {selfieState === 'captured' && (
                 <div className="w-full flex flex-col items-center">
                   <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ width: '280px', height: '280px', border: '2px solid var(--success)' }}>
-                    {profile?.aadhaar?.name === 'Robert' ? (
+                    {profile?.aadhaar?.name === 'Robert Williams' ? (
                       <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                    ) : profile?.aadhaar?.name === 'Chris' ? (
+                    ) : profile?.aadhaar?.name === 'Chris Evans' ? (
                       <img src={chrisSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : profile?.aadhaar?.name === 'Mark Taylor' ? (
                       <img src={markSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
