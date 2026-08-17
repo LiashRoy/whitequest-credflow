@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 import { formatINR, generateUTR, generateLoanId } from '../engine/creditEngine';
 import { detectProfile, getProfileById } from '../engine/mockProfiles';
 
 export default function Disbursement() {
-  const { state, dispatch, nextStep } = useLoan();
+  const { state, dispatch, nextStep, reset } = useLoan();
+  const navigate = useNavigate();
   const [phase, setPhase] = useState('processing');
   const [progress, setProgress] = useState(0);
 
@@ -98,9 +100,14 @@ export default function Disbursement() {
               </div>
             </div>
             
-            <button className="btn btn-primary btn-block" onClick={nextStep}>
-              View Loan Details
-            </button>
+            <div className="w-full flex-col gap-3" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <button className="btn btn-primary btn-block" onClick={nextStep}>
+                View Loan Dashboard →
+              </button>
+              <button className="btn btn-secondary btn-block" onClick={() => { reset(); navigate('/'); }}>
+                Start New Application
+              </button>
+            </div>
           </div>
         )}
       </div>
