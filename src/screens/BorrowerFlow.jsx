@@ -15,11 +15,27 @@ import Disbursement from './Disbursement';
 import Dashboard from './Dashboard';
 import PANInput from './PANInput';
 import CIBILEvaluation from './CIBILEvaluation';
+import ReturningUserLogin from './ReturningUserLogin';
+import ExistingLoanSummary from './ExistingLoanSummary';
 
-const SCREENS = {
+// New user flow: full KYC journey
+const NEW_USER_SCREENS = {
   1: MobileConsent, 2: Employment, 3: Landing, 4: PANInput,
   5: CIBILEvaluation, 6: DigiLocker, 7: CreditAssessment, 
   8: Decision, 9: AadhaarKYC, 10: Agreement, 11: Disbursement, 12: Dashboard
+};
+
+// Returning user flow: skip KYC, go straight to loan params after login
+const RETURNING_USER_SCREENS = {
+  1: ReturningUserLogin,    // Login with registered phone
+  2: ExistingLoanSummary,   // Show existing loan (if any)
+  3: Landing,               // Loan parameters
+  4: Employment,            // Employment (pre-filled)
+  5: CreditAssessment,      // Credit assessment
+  6: Decision,              // Decision
+  7: Agreement,             // Agreement
+  8: Disbursement,          // Disbursement
+  9: Dashboard              // Dashboard
 };
 
 export default function BorrowerFlow() {
@@ -55,6 +71,7 @@ export default function BorrowerFlow() {
     syncApplication,
   ]);
 
+  const SCREENS = state.isReturningUser ? RETURNING_USER_SCREENS : NEW_USER_SCREENS;
   const Screen = SCREENS[state.currentStep] || Landing;
 
   return (

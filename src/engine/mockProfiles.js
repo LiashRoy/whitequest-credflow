@@ -208,6 +208,48 @@ export const PROFILES = {
     creditHistory: 'No bureau record found',
     upiId: 'karan.joshi@axisbank',
   },
+
+  F: {
+    id: 'F',
+    label: 'Returning User (Mark)',
+    tagline: 'Registered user — returning for a new loan',
+    icon: '🔵',
+    color: '#3B82F6',
+    aadhaar: {
+      number: '6789 0123 4567',
+      maskedNumber: 'XXXX XXXX 4567',
+      name: 'Mark Taylor',
+      dob: '28/07/1991',
+      gender: 'Male',
+      address: '15, Banjara Hills, Hyderabad, Telangana — 500034',
+      photo: null,
+    },
+    pan: {
+      number: 'FGHPM7890V',
+      name: 'MARK TAYLOR',
+      status: 'Valid',
+    },
+    bankStatement: {
+      bank: 'Kotak Mahindra Bank',
+      accountNumber: 'XXXX XXXX 6789',
+      ifsc: 'KKBK0006789',
+      avgBalance3m: 195000,
+      salaryCredits: [95000, 96000, 95000],
+      avgMonthlyCredit: 98000,
+      months: ['May 2026', 'Jun 2026', 'Jul 2026'],
+    },
+    employment: {
+      type: 'salaried',
+      employer: 'HCL Technologies Ltd.',
+      email: 'mark.taylor@hcl.com',
+      monthlyIncome: 95000,
+      existingEMI: 8000,
+    },
+    creditScore: 760,
+    creditHistory: '5+ years, no defaults',
+    upiId: 'mark.taylor@kotak',
+    mobile: '9876501234',
+  },
 };
 
 // Auto-detect profile from employment data (fallback when no profile is explicitly selected)

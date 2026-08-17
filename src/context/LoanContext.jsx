@@ -9,18 +9,41 @@ const LoanContext = createContext(null);
 const NAMES = {
   'A': 'Robert',
   'B': 'Chris',
-  'C': 'Benedict'
+  'C': 'Benedict',
+  'F': 'Mark',
+  'F_LOAN': 'Mark',
 };
 const PANS = {
   'A': 'ABCPS1234R',
   'B': 'BKVPS5566T',
-  'C': 'CMLPS9988X'
+  'C': 'CMLPS9988X',
+  'F': 'FGHPM7890V',
+  'F_LOAN': 'FGHPM7890V',
+};
+// Mock existing loan data for Mark B (has active loan)
+const EXISTING_LOAN_MOCK = {
+  loanId: 'WQ-2026-00412',
+  approvedAmount: 300000,
+  interestRate: 5,
+  tenure: 12,
+  emi: 25685,
+  emiPaid: 4,
+  disbursedOn: '2026-04-15',
+  nextDueDate: '05 Sep 2026',
+  totalPaid: 102740,
+  remainingAmount: 205380,
+  status: 'Active',
 };
 
 function getInitialState(profileId = 'A') {
+  const isReturning = profileId === 'F' || profileId === 'F_LOAN';
+  const hasExistingLoan = profileId === 'F_LOAN';
+  // For returning users with F_LOAN, use the base 'F' profile for mock data
+  const effectiveProfileId = (profileId === 'F_LOAN') ? 'F' : profileId;
+
   return {
     currentStep: 1,
-    totalSteps: 12,
+    totalSteps: isReturning ? 9 : 12,
 
     // Step 1 — Loan parameters
     loanParams: { amount: 200000, tenure: 12 },
@@ -52,13 +75,17 @@ function getInitialState(profileId = 'A') {
     signatureName: '',
 
     // Step 9 — Disbursement
-    disbursement: null,   // { utr, amount, timestamp, upiId }
+    disbursement: null,   // { utr, amount, timestamp, bankAccount, ifsc }
 
     // Step 10 — Loan ID
     loanId: null,
 
+    // Returning user state
+    isReturningUser: isReturning,
+    existingLoanData: hasExistingLoan ? EXISTING_LOAN_MOCK : null,
+
     // Demo mode
-    testProfile: profileId,
+    testProfile: effectiveProfileId,
     demoName: NAMES[profileId],
     demoPan: PANS[profileId],
     showProfileSwitcher: false,

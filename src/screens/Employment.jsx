@@ -20,7 +20,9 @@ export default function Employment() {
         setEmployer(profile.employment.employer || profile.employment.businessName || '');
         setEmail(profile.employment.email || '');
         setMonthlyIncome(profile.employment.monthlyIncome || '');
-        setExistingEMI(profile.employment.existingEMI || 0);
+        // For returning users with active loan, add existing loan EMI to their obligations
+        const activeLoanEMI = state.existingLoanData ? state.existingLoanData.emi : 0;
+        setExistingEMI((profile.employment.existingEMI || 0) + activeLoanEMI);
       }
     } else if (state.employmentData) {
       setType(state.employmentData.type || 'salaried');

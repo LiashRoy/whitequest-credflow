@@ -7,6 +7,7 @@ export default function Home() {
   const { reset } = useLoan();
 
   const [showDemoModal, setShowDemoModal] = useState(false);
+  const [modalStep, setModalStep] = useState('choose'); // 'choose' | 'new' | 'returning'
 
   const handleApplyClick = () => {
     setShowDemoModal(true);
@@ -127,45 +128,130 @@ export default function Home() {
       </div>
 
       {showDemoModal && (
-        <div className="modal-backdrop" onClick={() => setShowDemoModal(false)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 100 }}>
+        <div className="modal-backdrop" onClick={() => { setShowDemoModal(false); setModalStep('choose'); }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 100 }}>
           <div className="card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '700px', width: '95%', padding: '2.5rem', animation: 'fadeSlideUp 0.3s ease' }}>
-            <h2 className="heading-xl mb-3 text-center">Select Demo Scenario</h2>
-            <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Choose a borrower profile to test different flow branches.</p>
             
-            <div className="flex flex-col gap-4">
-              <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('A')}>
-                <div className="flex flex-between w-full mb-1">
-                  <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    Prime Customer
-                  </span>
-                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 782</span>
-                </div>
-                <span className="text-xs text-muted font-normal text-left">Fast-track approval. Bypasses bank statement upload completely.</span>
-              </button>
+            {/* STEP 1: Choose New or Registered */}
+            {modalStep === 'choose' && (
+              <>
+                <h2 className="heading-xl mb-3 text-center">Welcome to WhiteQuest</h2>
+                <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>How would you like to proceed?</p>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div 
+                    className="card"
+                    onClick={() => setModalStep('new')}
+                    style={{ cursor: 'pointer', padding: '2rem', textAlign: 'center', border: '1px solid var(--border)', transition: 'all 0.2s ease', background: 'var(--bg-secondary)' }}
+                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--accent)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.border = '1px solid var(--border)'; e.currentTarget.style.background = 'var(--bg-secondary)'; }}
+                  >
+                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'linear-gradient(135deg, #10B981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <h3 className="heading-sm mb-1">New User</h3>
+                    <p className="text-xs text-muted">First time applying for a loan</p>
+                  </div>
 
-              <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('B')}>
-                <div className="flex flex-between w-full mb-1">
-                  <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
-                    Near-Prime Customer
-                  </span>
-                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 710</span>
+                  <div 
+                    className="card"
+                    onClick={() => setModalStep('returning')}
+                    style={{ cursor: 'pointer', padding: '2rem', textAlign: 'center', border: '1px solid var(--border)', transition: 'all 0.2s ease', background: 'var(--bg-secondary)' }}
+                    onMouseEnter={e => { e.currentTarget.style.border = '1px solid var(--accent)'; e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.border = '1px solid var(--border)'; e.currentTarget.style.background = 'var(--bg-secondary)'; }}
+                  >
+                    <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: 'linear-gradient(135deg, #3B82F6, #1D4ED8)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h3 className="heading-sm mb-1">Registered User</h3>
+                    <p className="text-xs text-muted">Already have an account with us</p>
+                  </div>
                 </div>
-                <span className="text-xs text-muted font-normal text-left">Requires bank statement verification, but gets approved based on income.</span>
-              </button>
+              </>
+            )}
 
-              <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('C')}>
-                <div className="flex flex-between w-full mb-1">
-                  <span className="font-semibold text-white flex gap-2 items-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    Sub-Prime Customer
-                  </span>
-                  <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 650</span>
+            {/* STEP 2a: New User — Show 3 demo profiles */}
+            {modalStep === 'new' && (
+              <>
+                <button className="text-xs text-muted mb-4" onClick={() => setModalStep('choose')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  Back
+                </button>
+                <h2 className="heading-xl mb-3 text-center">Select Demo Scenario</h2>
+                <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Choose a borrower profile to test different flow branches.</p>
+                
+                <div className="flex flex-col gap-4">
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('A')}>
+                    <div className="flex flex-between w-full mb-1">
+                      <span className="font-semibold text-white flex gap-2 items-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Robert — Prime Customer
+                      </span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 782</span>
+                    </div>
+                    <span className="text-xs text-muted font-normal text-left">Fast-track approval. Bypasses bank statement upload completely.</span>
+                  </button>
+
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('B')}>
+                    <div className="flex flex-between w-full mb-1">
+                      <span className="font-semibold text-white flex gap-2 items-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="20" width="20" height="2"></rect><rect x="4" y="10" width="4" height="10"></rect><rect x="16" y="10" width="4" height="10"></rect><polygon points="12 4 2 10 22 10 12 4"></polygon></svg>
+                        Chris — Near-Prime Customer
+                      </span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 710</span>
+                    </div>
+                    <span className="text-xs text-muted font-normal text-left">Requires bank statement verification, but gets approved based on income.</span>
+                  </button>
+
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('C')}>
+                    <div className="flex flex-between w-full mb-1">
+                      <span className="font-semibold text-white flex gap-2 items-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        Benedict — Sub-Prime Customer
+                      </span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 650</span>
+                    </div>
+                    <span className="text-xs text-muted font-normal text-left">Requires bank statement verification. Rejected due to high DTI ratio.</span>
+                  </button>
                 </div>
-                <span className="text-xs text-muted font-normal text-left">Requires bank statement verification. Rejected due to high DTI ratio.</span>
-              </button>
-            </div>
+              </>
+            )}
+
+            {/* STEP 2b: Registered User — Show Mark's 2 demo scenarios */}
+            {modalStep === 'returning' && (
+              <>
+                <button className="text-xs text-muted mb-4" onClick={() => setModalStep('choose')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  Back
+                </button>
+                <h2 className="heading-xl mb-3 text-center">Returning User: Mark Taylor</h2>
+                <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Select a demo scenario for the registered user flow.</p>
+                
+                <div className="flex flex-col gap-4">
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F')}>
+                    <div className="flex flex-between w-full mb-1">
+                      <span className="font-semibold text-white flex gap-2 items-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Mark — No Existing Loan
+                      </span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 760</span>
+                    </div>
+                    <span className="text-xs text-muted font-normal text-left">Previously registered user with no active loans. Skips KYC and applies for a fresh loan directly.</span>
+                  </button>
+
+                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F_LOAN')}>
+                    <div className="flex flex-between w-full mb-1">
+                      <span className="font-semibold text-white flex gap-2 items-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+                        Mark — Has Active Loan (₹3L)
+                      </span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">TOP-UP</span>
+                    </div>
+                    <span className="text-xs text-muted font-normal text-left">Has an active ₹3,00,000 loan with 4 EMIs paid. Views existing loan summary, then applies for a top-up loan.</span>
+                  </button>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
       )}
