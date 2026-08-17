@@ -81,7 +81,12 @@ export default function AdminDashboard() {
             </div>
             <div className="text-right">
               <p className="text-xs text-muted mb-1">Status</p>
-              <span className={getStatusBadgeClass(selectedApp.status)}>{getStatusLabel(selectedApp.status)}</span>
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                <span className={getStatusBadgeClass(selectedApp.status)}>{getStatusLabel(selectedApp.status)}</span>
+                {selectedApp.creditResult?.decision === 'APPROVED_CONDITIONS' && (selectedApp.status === 'DISBURSED' || selectedApp.status === 'AGREEMENT_SIGNED') && (
+                  <span className={getStatusBadgeClass('APPROVED_CONDITIONS')}>{getStatusLabel('APPROVED_CONDITIONS')}</span>
+                )}
+              </div>
             </div>
           </div>
           
@@ -201,9 +206,16 @@ export default function AdminDashboard() {
                   <div className="text-xs text-muted">{app.loanParams?.tenure || 0} months</div>
                 </td>
                 <td className="p-4">
-                  <span className={getStatusBadgeClass(app.status)} style={{ fontSize: '11px', padding: '2px 6px' }}>
-                    {getStatusLabel(app.status)}
-                  </span>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <span className={getStatusBadgeClass(app.status)} style={{ fontSize: '11px', padding: '2px 6px' }}>
+                      {getStatusLabel(app.status)}
+                    </span>
+                    {app.creditResult?.decision === 'APPROVED_CONDITIONS' && (app.status === 'DISBURSED' || app.status === 'AGREEMENT_SIGNED') && (
+                      <span className={getStatusBadgeClass('APPROVED_CONDITIONS')} style={{ fontSize: '11px', padding: '2px 6px' }}>
+                        {getStatusLabel('APPROVED_CONDITIONS')}
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="p-4 text-sm text-muted whitespace-nowrap">
                   {new Date(app.updatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
