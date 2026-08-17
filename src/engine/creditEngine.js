@@ -231,6 +231,15 @@ export function assessCredit(params) {
   }
 
   // Near-prime or reduced amount
+  const alternativeRate = rate + 6;
+  const alternativeOffer = approvedAmount < requestedAmount ? {
+    approvedAmount: requestedAmount,
+    interestRate: alternativeRate,
+    emi: calculateEMI(requestedAmount, alternativeRate, tenure),
+    processingFee: Math.round(requestedAmount * PROCESSING_FEE_PCT / 100),
+    tenure,
+  } : null;
+
   return {
     decision: 'APPROVED_CONDITIONS',
     reason: approvedAmount < requestedAmount
@@ -245,6 +254,7 @@ export function assessCredit(params) {
     processingFee: Math.round(approvedAmount * PROCESSING_FEE_PCT / 100),
     tenure,
     tags: ['near-prime'],
+    alternativeOffer,
   };
 }
 

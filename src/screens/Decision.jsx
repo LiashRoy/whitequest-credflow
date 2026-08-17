@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoan } from '../context/LoanContext';
 import ProgressBar from '../components/ProgressBar';
 import { formatINR, totalInterest } from '../engine/creditEngine';
 
 export default function Decision() {
-  const { state, nextStep, reset } = useLoan();
+  const { state, nextStep, reset, dispatch } = useLoan();
   const { creditResult, loanParams } = state;
   const navigate = useNavigate();
+  const [selectedOffer, setSelectedOffer] = useState('primary');
 
   if (!creditResult) return null;
 
@@ -88,10 +89,26 @@ export default function Decision() {
   }
 
   if (creditResult.decision === 'APPROVED_CONDITIONS') {
+    const handleAcceptConditional = () => {
+      if (selectedOffer === 'alternative' && creditResult.alternativeOffer) {
+        dispatch({
+          type: 'SET_CREDIT_RESULT',
+          payload: {
+            ...creditResult,
+            approvedAmount: creditResult.alternativeOffer.approvedAmount,
+            interestRate: creditResult.alternativeOffer.interestRate,
+            emi: creditResult.alternativeOffer.emi,
+            processingFee: creditResult.alternativeOffer.processingFee
+          }
+        });
+      }
+      nextStep();
+    };
+
     return (
       <div className="screen">
         <ProgressBar />
-        <div className="screen-center">
+        <div className="screen-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div className="flex-center flex-col mb-6">
             <div className="status-icon status-icon-warning mb-2">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px', color: 'currentColor' }}>
@@ -107,32 +124,63 @@ export default function Decision() {
             <span className="badge badge-warning">CONDITIONAL</span>
           </div>
 
-          {creditResult.approvedAmount < loanParams.amount && (
-            <div className="card card-accent mb-4 text-center">
-              <p className="text-sm font-medium">Requested: {formatINR(loanParams.amount)} → Approved: {formatINR(creditResult.approvedAmount)}</p>
-            </div>
-          )}
-
-          <div className="card mb-4">
-            {renderOfferGrid(creditResult)}
-          </div>
-
-          <div className="card mb-4" style={{ backgroundColor: 'var(--bg-warning)', borderColor: 'var(--warning)' }}>
+          <div className="card mb-4" style={{ backgroundColor: 'var(--bg-warning)', borderColor: 'var(--warning)', textAlign: 'center' }}>
             <p className="text-body text-warning">{creditResult.reason}</p>
+            <p className="text-sm font-medium mt-2">Please select your preferred offer below.</p>
           </div>
 
-          {creditResult.bankStatementWeightage && (
-            <p className="text-sm text-muted text-center mb-4">
-              ⓘ Offer based on bank statement analysis (alternate data underwriting)
-            </p>
-          )}
+          <div style={{ display: 'grid', gridTemplateColumns: creditResult.alternativeOffer ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '24px' }}>
+            {/* Primary Offer */}
+            <div 
+              className="card" 
+              style={{ 
+                cursor: 'pointer',
+                border: selectedOffer === 'primary' ? '2px solid var(--accent)' : '1px solid var(--border)',
+                background: selectedOffer === 'primary' ? 'var(--bg-tertiary)' : 'var(--bg-card)',
+                boxShadow: selectedOffer === 'primary' ? '0 0 15px rgba(255,255,255,0.1)' : 'none',
+                transition: 'all 0.2s ease',
+                position: 'relative'
+              }}
+              onClick={() => setSelectedOffer('primary')}
+            >
+              {selectedOffer === 'primary' && (
+                <div style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: 'var(--accent)', color: '#000', padding: '2px 10px', borderRadius: '12px', fontSize: '10px', fontWeight: 'bold' }}>SELECTED</div>
+              )}
+              <h3 className="heading-sm mb-1 text-center" style={{ color: 'var(--accent)' }}>Recommended</h3>
+              <p className="text-xs text-muted text-center mb-3">Best terms for your profile</p>
+              {renderOfferGrid(creditResult)}
+            </div>
 
-          <div className="mt-6 flex flex-col gap-2">
-            <button className="btn btn-cta btn-block" onClick={nextStep}>
-              Accept Offer
+            {/* Alternative Offer */}
+            {creditResult.alternativeOffer && (
+              <div 
+                className="card" 
+                style={{ 
+                  cursor: 'pointer',
+                  border: selectedOffer === 'alternative' ? '2px solid var(--accent)' : '1px solid var(--border)',
+                  background: selectedOffer === 'alternative' ? 'var(--bg-tertiary)' : 'var(--bg-card)',
+                  boxShadow: selectedOffer === 'alternative' ? '0 0 15px rgba(255,255,255,0.1)' : 'none',
+                  transition: 'all 0.2s ease',
+                  position: 'relative'
+                }}
+                onClick={() => setSelectedOffer('alternative')}
+              >
+                {selectedOffer === 'alternative' && (
+                  <div style={{ position: 'absolute', top: '-10px', left: '50%', transform: 'translateX(-50%)', background: 'var(--accent)', color: '#000', padding: '2px 10px', borderRadius: '12px', fontSize: '10px', fontWeight: 'bold' }}>SELECTED</div>
+                )}
+                <h3 className="heading-sm mb-1 text-center text-warning">High Risk Alternative</h3>
+                <p className="text-xs text-muted text-center mb-3">Full amount at a premium rate</p>
+                {renderOfferGrid(creditResult.alternativeOffer)}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-6 flex flex-col gap-2" style={{ maxWidth: '400px', margin: '0 auto' }}>
+            <button className="btn btn-cta btn-block" onClick={handleAcceptConditional}>
+              Accept Selected Offer
             </button>
             <button className="btn btn-ghost btn-block" onClick={handleDecline}>
-              Decline
+              Decline Both Offers
             </button>
           </div>
         </div>
