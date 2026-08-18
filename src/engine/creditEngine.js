@@ -289,10 +289,10 @@ export function generateLoanId() {
 /**
  * Generate repayment schedule (first N EMIs).
  */
-export function generateSchedule(approvedAmount, rate, tenure, count = null) {
+export function generateSchedule(approvedAmount, rate, tenure, count = null, startDate = null) {
   const emi = calculateEMI(approvedAmount, rate, tenure);
   const schedule = [];
-  const now = new Date();
+  const baseDate = startDate ? new Date(startDate) : new Date();
   const totalCount = count || tenure;
   
   let outstanding = approvedAmount;
@@ -303,12 +303,9 @@ export function generateSchedule(approvedAmount, rate, tenure, count = null) {
     const principalComponent = emi - interestComponent;
     outstanding = Math.max(0, outstanding - principalComponent);
 
-    const date = new Date(now);
+    const date = new Date(baseDate);
     date.setMonth(date.getMonth() + i);
     date.setDate(5); // EMI on the 5th of each month
-
-    // Simulate: first 2 EMIs are "Paid" for demo purposes
-    const status = i <= 2 ? 'Paid' : 'Upcoming';
 
     schedule.push({
       installment: i,
@@ -317,7 +314,7 @@ export function generateSchedule(approvedAmount, rate, tenure, count = null) {
       principal: principalComponent,
       interest: interestComponent,
       outstanding: Math.max(0, Math.round(outstanding)),
-      status,
+      status: 'Upcoming',
     });
   }
 

@@ -16,10 +16,12 @@ export default function Dashboard() {
     existingSchedule = generateSchedule(
       existingLoanData.approvedAmount, 
       existingLoanData.interestRate, 
-      existingLoanData.tenure
+      existingLoanData.tenure,
+      null,
+      existingLoanData.disbursedOn
     ).map(item => ({
       ...item,
-      loanName: 'Existing Top-Up',
+      loanName: 'Existing Loan',
       status: item.installment <= existingLoanData.emiPaid ? 'Paid' : 'Upcoming'
     }));
   }
@@ -28,10 +30,13 @@ export default function Dashboard() {
   const newSchedule = creditResult ? generateSchedule(
     creditResult.approvedAmount, 
     creditResult.interestRate, 
-    creditResult.tenure
+    creditResult.tenure,
+    null,
+    disbursement?.timestamp || new Date().toISOString()
   ).map(item => ({
     ...item,
-    loanName: existingLoanData ? 'New Loan' : 'Loan'
+    loanName: existingLoanData ? 'New Top-Up Loan' : 'Loan',
+    status: 'Upcoming'
   })) : [];
 
   const schedule = [...existingSchedule, ...newSchedule];
