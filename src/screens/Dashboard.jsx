@@ -281,11 +281,11 @@ export default function Dashboard() {
               </div>
               <div className="flex-between mb-3 border-b border-border pb-3">
                 <span className="text-xs text-muted">UTR Reference</span>
-                <span className="text-sm font-medium font-mono">{disbursement?.utr || existingLoanData?.loanId || 'N/A'}</span>
+                <span className="text-sm font-medium font-mono">{disbursement?.utr || existingLoanData?.utr || existingLoanData?.loanId || 'N/A'}</span>
               </div>
               <div className="flex-between">
                 <span className="text-xs text-muted">Bank Account</span>
-                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || 'XXXX XXXX 6789'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || 'KKBK0006789'}</span></span>
+                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || existingLoanData?.bankAccount || 'XXXX XXXX 6789'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || existingLoanData?.ifsc || 'KKBK0006789'}</span></span>
               </div>
             </div>
 

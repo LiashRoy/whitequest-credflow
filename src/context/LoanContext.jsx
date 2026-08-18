@@ -176,6 +176,9 @@ function reducer(state, action) {
         totalPaid: state.existingLoanData?.totalPaid || 0,
         remainingAmount: state.creditResult.totalPayable + (state.existingLoanData?.remainingAmount || 0),
         status: 'Active',
+        utr: state.disbursement?.utr || null,
+        bankAccount: state.disbursement?.bankAccount || null,
+        ifsc: state.disbursement?.ifsc || null,
       } : state.existingLoanData;
 
       return {
