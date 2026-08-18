@@ -27,6 +27,14 @@ export default function Agreement() {
   // Selfie State
   const [selfieState, setSelfieState] = useState('pending'); // 'pending', 'requesting_permission', 'camera', 'capturing', 'captured', 'submitted'
 
+  // Preload selfie image on mount so it displays instantly
+  useEffect(() => {
+    const img = new Image();
+    if (state.demoName?.includes('Robert') || state.testProfile === 'A') img.src = robertSelfie;
+    else if (state.demoName?.includes('Chris') || state.testProfile === 'B') img.src = chrisSelfie;
+    else if (state.demoName?.includes('Mark') || state.testProfile === 'F') img.src = markSelfie;
+  }, [state.demoName, state.testProfile]);
+
   const { creditResult, bankStatementData } = state;
 
   useEffect(() => {
@@ -227,13 +235,13 @@ export default function Agreement() {
 
               {selfieState === 'captured' && (
                 <div className="w-full flex flex-col items-center">
-                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ width: '280px', height: '280px', border: '2px solid var(--success)' }}>
-                    {state.testProfile === 'A' ? (
-                      <img src={robertSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                    ) : state.testProfile === 'B' ? (
-                      <img src={chrisSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                    ) : (state.testProfile === 'F' || state.testProfile === 'F_LOAN') ? (
-                      <img src={markSelfie} alt="Selfie" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+                  <div className="bg-black rounded-lg mb-3 overflow-hidden relative flex items-center justify-center" style={{ width: '280px', height: '280px', border: '2px solid var(--success)', background: 'rgba(255,255,255,0.03)' }}>
+                    {state.demoName?.includes('Robert') || state.testProfile === 'A' ? (
+                      <img src={robertSelfie} alt="Selfie" loading="eager" onError={(e) => { e.target.style.display='none'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+                    ) : state.demoName?.includes('Chris') || state.testProfile === 'B' ? (
+                      <img src={chrisSelfie} alt="Selfie" loading="eager" onError={(e) => { e.target.style.display='none'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+                    ) : state.demoName?.includes('Mark') || state.testProfile === 'F' ? (
+                      <img src={markSelfie} alt="Selfie" loading="eager" onError={(e) => { e.target.style.display='none'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                     ) : (
                       <span className="text-muted text-sm">Preview</span>
                     )}
