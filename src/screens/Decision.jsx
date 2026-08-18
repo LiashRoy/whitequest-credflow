@@ -52,6 +52,12 @@ export default function Decision() {
   if (creditResult.decision === 'APPROVED') {
     return (
       <div className="screen">
+        <style>{`
+          @keyframes fadeScaleIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+        `}</style>
         <ProgressBar />
         <div className="screen-center">
           <div className="flex-center flex-col mb-6">
@@ -60,8 +66,22 @@ export default function Decision() {
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </div>
-            <h2 className="heading-xl text-center">Congratulations!</h2>
-            <p className="text-body text-center">Your loan is approved</p>
+            <h2 className="heading-xl text-center mb-1">Congratulations!</h2>
+            <div style={{ animation: 'fadeScaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards', marginTop: '16px' }}>
+              <div style={{ background: 'linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.02) 100%)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '12px', padding: '16px 20px', textAlign: 'center' }}>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#E2E8F0' }}>
+                  A loan of <strong style={{ color: '#10B981', fontSize: '1.2rem', letterSpacing: '0.5px', margin: '0 4px' }}>{formatINR(creditResult.approvedAmount)}</strong> has been approved for you.
+                </p>
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: '12px 0' }}></div>
+                <p className="text-xs text-muted" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    To be disbursed by our RBI-registered NBFC partner:
+                  </span>
+                  <strong style={{ color: '#fff', letterSpacing: '0.5px' }}>Apex Financial Services Ltd.</strong>
+                </p>
+              </div>
+            </div>
           </div>
           
           <div className="flex-center mb-4">
