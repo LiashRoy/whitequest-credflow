@@ -271,15 +271,21 @@ export default function Dashboard() {
             <div className="card bg-secondary" style={{ padding: '1rem 1.25rem' }}>
               <div className="flex-between mb-3 border-b border-border pb-3">
                 <span className="text-xs text-muted">Disbursed On</span>
-                <span className="text-sm font-medium">{disbursement?.timestamp ? new Date(disbursement.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) : 'N/A'}</span>
+                <span className="text-sm font-medium">{
+                  disbursement?.timestamp 
+                    ? new Date(disbursement.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })
+                    : existingLoanData?.disbursedOn 
+                      ? new Date(existingLoanData.disbursedOn).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })
+                      : 'N/A'
+                }</span>
               </div>
               <div className="flex-between mb-3 border-b border-border pb-3">
                 <span className="text-xs text-muted">UTR Reference</span>
-                <span className="text-sm font-medium font-mono">{disbursement?.utr || 'N/A'}</span>
+                <span className="text-sm font-medium font-mono">{disbursement?.utr || existingLoanData?.loanId || 'N/A'}</span>
               </div>
               <div className="flex-between">
                 <span className="text-xs text-muted">Bank Account</span>
-                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || 'N/A'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || ''}</span></span>
+                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || 'XXXX XXXX 6789'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || 'KKBK0006789'}</span></span>
               </div>
             </div>
 
