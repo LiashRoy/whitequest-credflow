@@ -227,26 +227,30 @@ export default function Home() {
                 <p className="text-body text-muted text-center mb-8" style={{ fontSize: '1.1rem' }}>Select a demo scenario for the registered user flow.</p>
                 
                 <div className="flex flex-col gap-4">
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F')} style={{ overflow: 'hidden' }}>
-                    <div className="flex flex-between w-full mb-1">
-                      <span className="font-semibold text-white flex gap-2 items-center">
+                  <button className="btn btn-secondary text-left flex flex-col items-start h-auto" onClick={() => startDemo('F')} style={{ overflow: 'hidden', padding: '1.25rem 1.5rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '8px' }}>
+                      <span className="font-semibold text-white flex gap-2 items-center" style={{ fontSize: '0.95rem' }}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Mark — No Existing Loan
+                        All Loans Cleared
                       </span>
-                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">CIBIL 760</span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10" style={{ fontSize: '10px' }}>CIBIL 760</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Previously registered user with no active loans. Skips KYC and applies for a fresh loan directly.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.6', marginTop: '2px' }}>
+                      Previous ₹1,50,000 loan fully repaid. Dashboard shows cleared history, then apply for a new loan.
+                    </span>
                   </button>
 
-                  <button className="btn btn-secondary text-left flex flex-col items-start p-5 h-auto" onClick={() => startDemo('F_LOAN')} style={{ overflow: 'hidden' }}>
-                    <div className="flex flex-between w-full mb-1">
-                      <span className="font-semibold text-white flex gap-2 items-center">
+                  <button className="btn btn-secondary text-left flex flex-col items-start h-auto" onClick={() => startDemo('F_LOAN')} style={{ overflow: 'hidden', padding: '1.25rem 1.5rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '8px' }}>
+                      <span className="font-semibold text-white flex gap-2 items-center" style={{ fontSize: '0.95rem' }}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
-                        Mark — Has Active Loan (₹3L)
+                        Active Loan — ₹3,00,000
                       </span>
-                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10">TOP-UP</span>
+                      <span className="badge badge-neutral border border-border text-muted bg-opacity-10" style={{ fontSize: '10px' }}>TOP-UP</span>
                     </div>
-                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.4' }}>Has an active ₹3,00,000 loan with 4 EMIs paid. Views existing loan summary, then applies for a top-up loan.</span>
+                    <span className="text-xs text-muted font-normal text-left w-full" style={{ whiteSpace: 'normal', wordWrap: 'break-word', lineHeight: '1.6', marginTop: '2px' }}>
+                      9 of 12 EMIs paid. View active loan dashboard with remaining balance, then apply for a top-up.
+                    </span>
                   </button>
                 </div>
               </>
