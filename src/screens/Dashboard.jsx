@@ -268,10 +268,10 @@ export default function Dashboard() {
         {activeTab === 'details' && (
           <div className="animate-fadeSlideUp flex-col gap-4" style={{ display: 'flex' }}>
             <h3 className="heading-sm mb-1 mt-2">Disbursement Details</h3>
-            <div className="card bg-secondary" style={{ padding: '1rem 1.25rem' }}>
-              <div className="flex-between mb-3 border-b border-border pb-3">
-                <span className="text-xs text-muted">Disbursed On</span>
-                <span className="text-sm font-medium">{
+            <div className="card bg-secondary" style={{ padding: '1.25rem 1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span className="text-sm text-muted">Disbursed On</span>
+                <span className="text-sm font-semibold">{
                   disbursement?.timestamp 
                     ? new Date(disbursement.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })
                     : existingLoanData?.disbursedOn 
@@ -279,13 +279,16 @@ export default function Dashboard() {
                       : 'N/A'
                 }</span>
               </div>
-              <div className="flex-between mb-3 border-b border-border pb-3">
-                <span className="text-xs text-muted">UTR Reference</span>
-                <span className="text-sm font-medium font-mono">{disbursement?.utr || existingLoanData?.utr || existingLoanData?.loanId || 'N/A'}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span className="text-sm text-muted">UTR Reference</span>
+                <span className="text-sm font-semibold font-mono" style={{ letterSpacing: '0.5px' }}>{disbursement?.utr || existingLoanData?.utr || existingLoanData?.loanId || 'N/A'}</span>
               </div>
-              <div className="flex-between">
-                <span className="text-xs text-muted">Bank Account</span>
-                <span className="text-sm font-medium" style={{ textAlign: 'right' }}>{disbursement?.bankAccount || existingLoanData?.bankAccount || 'XXXX XXXX 6789'}<br/><span className="text-xs text-muted font-normal">{disbursement?.ifsc || existingLoanData?.ifsc || 'KKBK0006789'}</span></span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="text-sm text-muted">Bank Account</span>
+                <div style={{ textAlign: 'right' }}>
+                  <p className="text-sm font-semibold" style={{ marginBottom: '2px' }}>{disbursement?.bankAccount || existingLoanData?.bankAccount || 'XXXX XXXX 6789'}</p>
+                  <p className="text-xs text-muted">{disbursement?.ifsc || existingLoanData?.ifsc || 'KKBK0006789'}</p>
+                </div>
               </div>
             </div>
 
