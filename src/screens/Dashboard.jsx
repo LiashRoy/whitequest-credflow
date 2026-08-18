@@ -21,7 +21,7 @@ export default function Dashboard() {
       existingLoanData.disbursedOn
     ).map(item => ({
       ...item,
-      loanName: 'Existing Loan',
+      loanName: existingLoanData.remainingAmount === 0 ? 'Previous Loan' : 'Active Loan',
       status: item.installment <= existingLoanData.emiPaid ? 'Paid' : 'Upcoming'
     }));
   }
@@ -41,16 +41,27 @@ export default function Dashboard() {
 
   const schedule = [...existingSchedule, ...newSchedule];
 
-  const paidCount = schedule.filter(s => s.status === 'Paid').length;
-  const upcomingCount = schedule.filter(s => s.status === 'Upcoming').length;
-  const totalEMIs = schedule.length;
-  const paidAmount = schedule.filter(s => s.status === 'Paid').reduce((sum, s) => sum + s.amount, 0);
-  const remainingAmount = schedule.filter(s => s.status === 'Upcoming').reduce((sum, s) => sum + s.amount, 0);
+  const activeSchedules = (existingLoanData?.remainingAmount === 0 && creditResult) 
+    ? newSchedule 
+    : schedule;
+
+  const paidCount = activeSchedules.filter(s => s.status === 'Paid').length;
+  const upcomingCount = activeSchedules.filter(s => s.status === 'Upcoming').length;
+  const totalEMIs = activeSchedules.length;
+  const paidAmount = activeSchedules.filter(s => s.status === 'Paid').reduce((sum, s) => sum + s.amount, 0);
+  const remainingAmount = activeSchedules.filter(s => s.status === 'Upcoming').reduce((sum, s) => sum + s.amount, 0);
   const totalPayable = paidAmount + remainingAmount;
   
-  // Total interest combines both if existing is present
+  // Total interest combines both if existing is present and active
   const newLoanInt = creditResult ? totalInterest(creditResult.approvedAmount, creditResult.interestRate, creditResult.tenure) : 0;
-  const existingLoanInt = existingLoanData ? totalInterest(existingLoanData.approvedAmount, existingLoanData.interestRate, existingLoanData.tenure) : 0;
+  let existingLoanInt = 0;
+  if (existingLoanData) {
+    if (existingLoanData.remainingAmount === 0 && creditResult) {
+      existingLoanInt = 0; // Exclude cleared loan interest if a new active loan exists
+    } else {
+      existingLoanInt = totalInterest(existingLoanData.approvedAmount, existingLoanData.interestRate, existingLoanData.tenure);
+    }
+  }
   const totalInt = newLoanInt + existingLoanInt;
   
   const progressPercent = totalEMIs > 0 ? Math.round((paidCount / totalEMIs) * 100) : 0;
@@ -148,19 +159,23 @@ export default function Dashboard() {
                 <p className="text-xs text-muted mb-1">Loan Amount</p>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <p className="font-bold" style={{ fontSize: '1.2rem' }}>
-                    {formatINR((existingLoanData?.approvedAmount || 0) + (creditResult?.approvedAmount || 0))}
+                    {formatINR(
+                      creditResult 
+                        ? (existingLoanData?.remainingAmount === 0 ? creditResult.approvedAmount : (existingLoanData?.approvedAmount || 0) + creditResult.approvedAmount) 
+                        : (existingLoanData?.approvedAmount || 0)
+                    )}
                   </p>
-                  {existingLoanData && (
+                  {existingLoanData && creditResult && existingLoanData.remainingAmount > 0 && (
                     <p className="text-xs text-muted mt-1" style={{ fontSize: '0.7rem' }}>
                       {formatINR(existingLoanData.approvedAmount)} (Existing) <br/>
-                      <span style={{ color: '#10B981' }}>+ {formatINR(creditResult?.approvedAmount || 0)} (Top-up)</span>
+                      <span style={{ color: '#10B981' }}>+ {formatINR(creditResult.approvedAmount)} (Top-up)</span>
                     </p>
                   )}
                 </div>
               </div>
               <div className="card bg-secondary" style={{ padding: '1rem 1.2rem' }}>
                 <p className="text-xs text-muted mb-1">Interest Rate</p>
-                <p className="font-bold" style={{ fontSize: '1rem' }}>{creditResult?.interestRate || 0}% <span className="text-xs text-muted font-normal">p.a.</span></p>
+                <p className="font-bold" style={{ fontSize: '1rem' }}>{creditResult?.interestRate || existingLoanData?.interestRate || 0}% <span className="text-xs text-muted font-normal">p.a.</span></p>
               </div>
             </div>
 

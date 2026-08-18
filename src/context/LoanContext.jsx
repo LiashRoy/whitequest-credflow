@@ -42,8 +42,8 @@ const EXISTING_LOAN_MOCK = {
   tenure: 12,
   emi: 25685,
   emiPaid: 9, // at least 2/3 paid (9/12)
-  disbursedOn: '2026-02-15',
-  nextDueDate: '15 Nov 2026',
+  disbursedOn: '2025-11-15',
+  nextDueDate: '05 Sep 2026',
   totalPaid: 231165,
   remainingAmount: 77055,
   status: 'Active',
