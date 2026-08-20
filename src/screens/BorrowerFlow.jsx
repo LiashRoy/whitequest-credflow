@@ -54,7 +54,16 @@ export default function BorrowerFlow() {
 
   // Sync to ApplicationsContext whenever a milestone is hit
   useEffect(() => {
-    if (state.currentStep >= 2) {
+    // Only track when a user is actively in an application flow.
+    // For new users, Step 1 is Consent, Step 2 is Employment (Tracking starts).
+    // For returning users, Step 1 is Login, Step 2 is Dashboard. Tracking starts at Step 3 (Loan Params).
+    const isTracking = state.isReturningUser ? state.currentStep >= 3 : state.currentStep >= 2;
+    
+    // Do not sync if they reached the final Dashboard step (Step 9 for returning, 12 for new)
+    // because the application is already logged as DISBURSED at the Disbursement step.
+    const isFinalDashboard = state.isReturningUser ? state.currentStep === 9 : state.currentStep === 12;
+
+    if (isTracking && !isFinalDashboard) {
       const status = deriveStatusFromLoanState(state);
       const data = extractAppDataFromLoanState(state);
       syncApplication(status, data);
